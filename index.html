@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,12 +30,17 @@
     }
 
     *{ box-sizing:border-box; }
+    html{
+      margin:0;
+      min-height:100%;
+      background: radial-gradient(1200px 600px at 20% -10%, #1a2c5a 0%, var(--bg) 60%);
+    }
     body{
       margin:0;
+      min-height:100vh;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       background: radial-gradient(1200px 600px at 20% -10%, #1a2c5a 0%, var(--bg) 60%);
-      height:100vh;
       display:flex;
       flex-direction:column;
     }
@@ -63,6 +69,23 @@
       background:var(--accent);
       box-shadow:0 0 14px rgba(105,179,231,.7);
     }
+
+    .liveLaunch{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(105,179,231,.5);
+      background: rgba(105,179,231,.14);
+      color:var(--text);
+      font-weight:900;
+      text-decoration:none;
+      white-space:nowrap;
+      box-shadow:0 0 0 1px rgba(255,255,255,.03) inset;
+    }
+    .liveLaunch:hover{ border-color:#7cc4f0; background: rgba(105,179,231,.2); }
 
     .toolbar{
       display:flex;
@@ -322,12 +345,201 @@
       main{ flex-direction:column; }
       .right{ width:100%; max-width:none; }
     }
+  
+    .appPageHidden{ display:none !important; }
+
+    /* Finley Live embedded full-page experience */
+    #livePage{
+      min-height:100vh;
+      background:
+        radial-gradient(1000px 500px at 15% -5%, #1a2c5a 0%, #081120 58%),
+        linear-gradient(180deg, #0b1730, #081120);
+      color:var(--text);
+      padding-bottom:28px;
+    }
+    #livePage .liveHeader{
+      padding:18px 20px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(17,26,46,.95), rgba(15,23,48,.72));
+      position:sticky; top:0; z-index:30; backdrop-filter: blur(14px);
+      display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
+    }
+    #livePage .liveBrandWrap{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+    #livePage .backBtn, #livePage .ghostBtn, #livePage .primaryBtn, #livePage .tabBtn, #livePage .chipBtn, #livePage select{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      border-radius:14px;
+      padding:11px 14px;
+      font-weight:900;
+      text-decoration:none;
+      cursor:pointer;
+      outline:none;
+    }
+    #livePage .backBtn{ background:rgba(255,255,255,.03); }
+    #livePage .primaryBtn{ background:rgba(105,179,231,.16); border-color:rgba(105,179,231,.55); }
+    #livePage .ghostBtn:hover,#livePage .primaryBtn:hover,#livePage .tabBtn:hover,#livePage .chipBtn:hover,#livePage .backBtn:hover,#livePage select:hover{ border-color:#3b548f; }
+    #livePage .liveBrand{ font-size:1.15rem; font-weight:1000; display:flex; align-items:center; gap:10px; }
+    #livePage .liveSub{ color:var(--muted); font-size:.95rem; font-weight:700; }
+    #livePage .livePageGrid{
+      width:min(1320px, calc(100% - 28px));
+      margin:18px auto 28px;
+      display:grid;
+      grid-template-columns: 310px minmax(0,1fr);
+      gap:18px;
+      flex:1;
+    }
+    #livePage .sidebar,#livePage .content{
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(16,27,52,.88), rgba(11,22,45,.92));
+      box-shadow:0 18px 55px rgba(0,0,0,.22);
+      min-height:0;
+    }
+    #livePage .sidebar{ padding:18px; display:flex; flex-direction:column; gap:16px; }
+    #livePage .content{ padding:18px; display:flex; flex-direction:column; gap:16px; }
+    #livePage .eyebrow{ color:#9bcaf0; font-size:.84rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    #livePage h1,#livePage h2,#livePage h3,#livePage p{ margin:0; }
+    #livePage h1{ font-size:clamp(1.9rem, 3vw, 3rem); line-height:1; letter-spacing:-.03em; margin-top:2px; }
+    #livePage .lede{ color:var(--muted); line-height:1.4; font-size:1rem; max-width:62ch; }
+    #livePage .block{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      border-radius:20px; padding:14px;
+    }
+    #livePage .blockTitle{ font-weight:1000; font-size:1rem; margin-bottom:10px; }
+    #livePage .selector{ display:grid; gap:8px; }
+    #livePage .selector label{ color:var(--muted); font-size:.86rem; font-weight:800; }
+    #livePage select{ width:100%; padding:14px 16px; background:rgba(105,179,231,.08); border-color:rgba(105,179,231,.25); font-size:1.08rem; }
+    #livePage .heroStats{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    #livePage .stat{ border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); border-radius:18px; padding:12px; }
+    #livePage .statNum{ font-weight:1000; font-size:1.35rem; margin-bottom:4px; }
+    #livePage .statLabel{ color:var(--muted); font-size:.88rem; font-weight:700; }
+    #livePage .liveNav{ display:flex; gap:10px; flex-wrap:wrap; }
+    #livePage .tabBtn{ flex:1; min-width:120px; text-align:center; background:rgba(255,255,255,.03); }
+    #livePage .tabBtn.active{ background:rgba(105,179,231,.18); border-color:rgba(105,179,231,.5); box-shadow:0 0 0 1px rgba(255,255,255,.03) inset; }
+    #livePage .liveToolbar,#livePage .toolbarLeft,#livePage .toolbarRight{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    #livePage .liveToolbar{ justify-content:space-between; }
+    #livePage .chipBtn{ padding:10px 12px; font-size:.92rem; }
+    #livePage .chipBtn.active{ background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.15); }
+    #livePage .livePanel{ display:none; }
+    #livePage .livePanel.active{ display:block; }
+    #livePage .scheduleGrid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    #livePage .gameCard{
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(9,18,40,.85), rgba(12,21,44,.95));
+      border-radius:22px; padding:16px; display:grid; gap:12px; min-height:170px;
+    }
+    #livePage .gameTop{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+    #livePage .gameTeams{ font-size:1.85rem; line-height:1; letter-spacing:-.04em; font-weight:1000; }
+    #livePage .statusPill{
+      padding:10px 14px; border-radius:999px; font-weight:1000;
+      background:rgba(105,179,231,.14); border:1px solid rgba(105,179,231,.38);
+      white-space:nowrap;
+    }
+    #livePage .statusPill.live{
+      background:rgba(32,199,111,.14); border-color:rgba(32,199,111,.45); color:#caffdf;
+      box-shadow:0 0 0 1px rgba(255,255,255,.03) inset;
+    }
+    #livePage .scoreLine{ font-size:1.85rem; font-weight:1000; letter-spacing:-.04em; }
+    #livePage .meta{ color:var(--muted); font-size:1.06rem; font-weight:700; line-height:1.4; }
+    #livePage .cardActions{ display:flex; gap:10px; flex-wrap:wrap; }
+    #livePage .cardActions button{
+      border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); color:var(--text);
+      border-radius:14px; padding:10px 12px; font-weight:800;
+    }
+    #livePage .bracketWrap{ overflow-x:auto; padding-bottom:10px; }
+    #livePage .bracket{ display:grid; grid-template-columns:repeat(3,minmax(240px,1fr)); gap:16px; min-width:780px; }
+    #livePage .round{ display:grid; gap:12px; }
+    #livePage .roundTitle{ font-size:1rem; font-weight:1000; letter-spacing:.02em; text-transform:uppercase; color:#9bcaf0; }
+    #livePage .match{ border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); border-radius:18px; padding:14px; display:grid; gap:8px; }
+    #livePage .matchRow{ display:flex; justify-content:space-between; gap:12px; font-weight:900; }
+    #livePage .matchMeta{ color:var(--muted); font-size:.9rem; font-weight:700; line-height:1.35; }
+    #livePage .teamsGrid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    #livePage .teamCard{ border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); border-radius:22px; padding:16px; display:grid; gap:14px; }
+    #livePage .teamTop{ display:flex; justify-content:space-between; gap:10px; align-items:center; }
+    #livePage .teamName{ font-size:1.2rem; font-weight:1000; letter-spacing:-.02em; }
+    #livePage .teamSeed{ color:var(--muted); font-size:.9rem; font-weight:800; }
+    #livePage .roster{ display:grid; gap:8px; }
+    #livePage .player{ display:flex; justify-content:space-between; gap:10px; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.025); font-weight:800; }
+    #livePage .player span:last-child{ color:var(--muted); font-weight:700; }
+    #livePage .callout{ border:1px solid rgba(105,179,231,.25); background:rgba(105,179,231,.08); border-radius:18px; padding:14px; color:#d8ecfb; font-weight:700; line-height:1.45; }
+    #livePage .small{ color:var(--muted); font-size:.88rem; line-height:1.4; }
+    #livePage .miniList{ display:grid; gap:10px; }
+    #livePage .miniItem{ border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.025); border-radius:16px; padding:12px; display:grid; gap:6px; }
+    #livePage .miniItem strong{ font-size:1rem; }
+    @media (max-width:1080px){
+      #livePage .livePageGrid{ grid-template-columns:1fr; }
+      #livePage .scheduleGrid,#livePage .teamsGrid{ grid-template-columns:1fr; }
+    }
+    @media (max-width:760px){
+      #livePage .liveHeader{ padding:16px; }
+      #livePage .livePageGrid{ width:min(100% - 18px, 1320px); margin:12px auto 20px; gap:12px; }
+      #livePage .sidebar,#livePage .content{ padding:14px; border-radius:20px; }
+      #livePage .heroStats{ grid-template-columns:1fr; }
+      #livePage .gameTeams{ font-size:1.5rem; }
+      #livePage .scoreLine{ font-size:1.6rem; }
+      #livePage .statusPill{ padding:8px 12px; font-size:.95rem; }
+      #livePage .liveNav{ display:grid; grid-template-columns:1fr 1fr 1fr; }
+      #livePage .liveToolbar{ align-items:stretch; }
+      #livePage .toolbarLeft,#livePage .toolbarRight{ width:100%; }
+    }
+
+  
+    /* --- Finley Live upgraded --- */
+    .liveHeader{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(17,26,46,.98),rgba(12,19,38,.92));position:sticky;top:0;z-index:30;backdrop-filter:blur(10px)}
+    .liveBrandWrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .liveBrand{font-size:1.1rem;font-weight:1000;display:flex;align-items:center;gap:10px}
+    .liveSub{color:var(--muted);font-size:.95rem}
+    .backBtn,.ghostBtn,.primaryBtn,.chipBtn,.pillBtn,.tabBtn,.divisionPill{border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);padding:10px 14px;border-radius:14px;font-weight:800;cursor:pointer}
+    .primaryBtn{border-color:rgba(105,179,231,.55);background:rgba(105,179,231,.14)}
+    .ghostBtn:hover,.primaryBtn:hover,.chipBtn:hover,.pillBtn:hover,.backBtn:hover,.tabBtn:hover,.divisionPill:hover{border-color:#7cc4f0}
+    .livePageGrid{display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:22px;padding:22px;align-items:start}
+    .sidebar,.content{background:rgba(10,16,30,.46);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 30px rgba(0,0,0,.2)}
+    .sidebar{padding:20px;position:sticky;top:94px}.content{padding:22px}
+    .eyebrow{font-size:.78rem;color:var(--accent);font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .lede{color:var(--muted);line-height:1.55}.block{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03)}
+    .selector label,.importPanel label{display:block;font-size:.82rem;color:var(--muted);margin-bottom:8px;font-weight:800}.blockTitle{font-weight:900;margin-bottom:10px}
+    .miniList{display:grid;gap:10px}.miniItem{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04)}
+    .small{font-size:.88rem;color:var(--muted);line-height:1.45}
+    .heroStats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.stat{padding:14px;border-radius:18px;background:linear-gradient(180deg,rgba(105,179,231,.14),rgba(255,255,255,.02));border:1px solid rgba(105,179,231,.22)}
+    .statNum{font-size:1.45rem;font-weight:1000}.statLabel{font-size:.82rem;color:var(--muted);margin-top:3px}
+    .callout{padding:14px;border-radius:18px;background:rgba(105,179,231,.08);border:1px solid rgba(105,179,231,.22);color:#d9ecfb;line-height:1.55}
+    .miniMeta{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;color:var(--muted);font-size:.82rem}
+    .liveNav,.liveToolbar,.divisionFilters,.modalActions,.importActions{display:flex;gap:10px;flex-wrap:wrap}.liveNav{margin-top:18px}.liveToolbar{justify-content:space-between;align-items:center;margin:18px 0}.toolbarLeft,.toolbarRight{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .tabBtn,.chipBtn,.pillBtn{padding:10px 14px;border-radius:999px}.tabBtn.active,.chipBtn.active,.pillBtn.active,.divisionPill.active{background:rgba(105,179,231,.18);border-color:rgba(105,179,231,.5);box-shadow:0 0 0 1px rgba(105,179,231,.18) inset}
+    .divisionFilters{margin-top:16px}.livePanel{display:none}.livePanel.active{display:block}
+    .scheduleGrid,.teamsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+    .gameCard,.teamCard,.adminCard{padding:16px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--line)}
+    .gameTop,.teamTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.gameTeams,.teamName{font-weight:900;font-size:1.06rem;line-height:1.25}.teamSeed{color:var(--accent);font-weight:900}
+    .statusPill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:.8rem;font-weight:900;white-space:nowrap}
+    .statusPill.live{background:rgba(61,220,151,.14);border-color:rgba(61,220,151,.4);color:#c9ffea}.statusPill.final{background:rgba(255,199,44,.1);border-color:rgba(255,199,44,.35);color:#ffe8a1}.statusPill.next{background:rgba(105,179,231,.12);border-color:rgba(105,179,231,.33)}
+    .scoreLine{font-size:2rem;font-weight:1000;letter-spacing:-.03em;margin:10px 0 6px}.meta{color:var(--muted);line-height:1.5}
+    .cardActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.cardActions button{flex:1;min-width:0}
+    .bracketWrap{overflow:auto;padding-bottom:10px}.bracket{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);gap:14px;align-items:start}
+    .round{padding:14px;border-radius:20px;background:rgba(255,255,255,.03);border:1px solid var(--line);min-height:100%}.roundTitle{font-size:.82rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:1000;margin-bottom:10px}
+    .match{padding:12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);margin-bottom:10px}.matchRow{display:flex;justify-content:space-between;gap:10px;font-weight:800}.matchMeta{font-size:.82rem;color:var(--muted);margin-top:8px;line-height:1.4}
+    .roster{display:grid;gap:8px;margin-top:12px}.player{display:flex;justify-content:space-between;gap:10px;padding:9px 10px;border-radius:12px;background:rgba(255,255,255,.03);font-size:.92rem}
+    .importPanel textarea{width:100%;min-height:180px;resize:vertical;background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:12px;font:inherit;line-height:1.4}
+    .importPanel input[type="file"]{width:100%;padding:12px;border-radius:14px;border:1px dashed rgba(105,179,231,.35);background:rgba(255,255,255,.03);color:var(--muted)}
+    .adminGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}.hintList{display:grid;gap:8px;margin-top:10px}.hintItem{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.03);font-size:.9rem;color:var(--muted)}
+    .codeHint{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;background:rgba(255,255,255,.04);padding:2px 6px;border-radius:8px;color:#eaf4ff}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.52);backdrop-filter:blur(8px);z-index:60;padding:18px}.modal.show{display:flex}
+    .modalCard{width:min(760px,100%);max-height:min(88vh,900px);overflow:auto;background:linear-gradient(180deg,#10192f,#0b1324);border:1px solid var(--line);border-radius:24px;padding:18px 18px 16px;box-shadow:0 18px 60px rgba(0,0,0,.45)}
+    .modalHeader{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}.modalTitle{font-size:1.25rem;font-weight:1000}.closeBtn{background:none;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:8px 11px;cursor:pointer}
+    .detailGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:14px}.detailTile{padding:12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+    .detailLabel{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}.detailValue{font-weight:900}
+    .featuredBadge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,199,44,.3);background:rgba(255,199,44,.08);font-size:.82rem;font-weight:900;color:#ffe8a1}
+    .inlineSplit{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+    @media (max-width: 980px){.livePageGrid,.adminGrid{grid-template-columns:1fr}.sidebar{position:static}.liveHeader{padding:16px}.content{padding:18px}}
+
   </style>
 </head>
 
 <body>
 <header>
   <div class="brand"><span class="dot"></span>Finley’s Polo Board</div>
+  <button class="liveLaunch" id="openLiveBtn" type="button">Open Finley Live</button>
 
   <div class="toolbar">
     <div class="group">
@@ -447,7 +659,17 @@
 
       <div class="list" id="playsList"></div>
 
-      <div class="footerNote">
+      
+      <div class="ruleBox">
+        <h3>Finley Live</h3>
+        <ul>
+          <li>Open a dedicated tournament page with schedule, bracket, and roster views.</li>
+          <li>Designed as a full-page experience so it does not feel cramped inside the board UI.</li>
+          <li><button id="launchLiveInlineBtn" type="button" style="color:#9ed2ff;font-weight:800;text-decoration:none;background:none;border:none;padding:0;cursor:pointer;">Launch Finley Live →</button></li>
+        </ul>
+      </div>
+
+<div class="footerNote">
         • Arrow/Circle/Highlight draw on top • Eraser deletes strokes you touch • Record captures moves + marks as steps.
       </div>
     </div>
@@ -485,8 +707,401 @@
   </aside>
 </main>
 
+
+<div id="livePage" class="appPageHidden">
+  <div class="liveHeader">
+    <div class="liveBrandWrap">
+      <button class="backBtn" id="backToBoardBtn" type="button">← Back to Board</button>
+      <div>
+        <div class="liveBrand"><span class="dot"></span>Finley Live</div>
+        <div class="liveSub">Tournament hub for schedules, brackets, rosters, divisions, and sheet imports</div>
+      </div>
+    </div>
+    <div class="toolbarRight">
+      <button class="ghostBtn" id="refreshBtn" type="button">Refresh Data</button>
+      <button class="primaryBtn" id="featureBtn" type="button">Set as Featured</button>
+    </div>
+  </div>
+
+  <main class="livePageGrid">
+    <aside class="sidebar">
+      <div>
+        <div class="eyebrow">Tournament Hub</div>
+        <h1 style="margin:.35rem 0 0; font-size:clamp(1.7rem,3.5vw,2.4rem); line-height:1.05;">Full page, all divisions.</h1>
+      </div>
+      <p class="lede">This version gives Finley Live its own full-screen home and an admin workflow that can ingest sheet data copied straight from Google Sheets, uploaded as CSV or TSV, or pulled from a public Google Sheets link.</p>
+
+      <div class="divisionFilters" id="divisionFilters"></div>
+
+      <div class="block selector">
+        <label for="tournamentSelect">Tournament</label>
+        <select id="tournamentSelect"></select>
+      </div>
+
+      <div class="heroStats" id="heroStats"></div>
+
+      <div class="callout">
+        Parents get a cleaner phone experience. Coaches get brackets and rosters. Admins get a fast import path without rebuilding the whole site.
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">Current Featured Event</div>
+        <div id="featuredBadgeWrap"></div>
+        <div class="miniMeta">
+          <span id="divisionBadge">Division: NCAA</span>
+          <span id="liveTimestamp">Last refresh: just now</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">How imports work</div>
+        <div class="miniList">
+          <div class="miniItem"><strong>Upload CSV / TSV</strong><div class="small">Export your Google Sheet as CSV, or upload a tab-separated text file.</div></div>
+          <div class="miniItem"><strong>Paste from Sheets</strong><div class="small">Copy cells directly from Google Sheets and paste them into the admin tab.</div></div>
+          <div class="miniItem"><strong>Multiple divisions</strong><div class="small">10U, 12U, 14U, 16U, 18U, and NCAA can all live under the same Finley Live system.</div></div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div>
+        <div class="eyebrow" id="eyebrowTitle">Featured event</div>
+        <h2 id="pageTitle" style="font-size:clamp(1.55rem,2.5vw,2.35rem);font-weight:1000;letter-spacing:-.03em;margin:.4rem 0 0;">Bronx Spring Open</h2>
+        <p class="lede" id="pageSubtitle">April 12–13 • Bronx, NY</p>
+      </div>
+
+      <div class="liveNav">
+        <button class="tabBtn active" data-panel="schedulePanel" type="button">Schedule</button>
+        <button class="tabBtn" data-panel="bracketPanel" type="button">Bracket</button>
+        <button class="tabBtn" data-panel="teamsPanel" type="button">Teams</button>
+        <button class="tabBtn" data-panel="adminPanel" type="button">Admin</button>
+      </div>
+
+      <div class="liveToolbar">
+        <div class="toolbarLeft" id="dayFilters"></div>
+        <div class="toolbarRight">
+          <button class="chipBtn active" id="allGamesBtn" type="button">All Games</button>
+          <button class="chipBtn" id="liveOnlyBtn" type="button">Live Only</button>
+        </div>
+      </div>
+
+      <section id="schedulePanel" class="livePanel active">
+        <div class="scheduleGrid" id="scheduleGrid"></div>
+      </section>
+
+      <section id="bracketPanel" class="livePanel">
+        <div class="bracketWrap">
+          <div class="bracket" id="bracketGrid"></div>
+        </div>
+      </section>
+
+      <section id="teamsPanel" class="livePanel">
+        <div class="teamsGrid" id="teamsGrid"></div>
+      </section>
+
+      <section id="adminPanel" class="livePanel">
+        <div class="adminGrid">
+          <div class="adminCard importPanel">
+            <div class="blockTitle">Import tournament data</div>
+            <label for="adminDivisionSelect">Division for imported tournament</label>
+            <select id="adminDivisionSelect"></select>
+
+            <label for="sheetFileInput" style="margin-top:12px;">Upload CSV or TSV</label>
+            <input type="file" id="sheetFileInput" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values" />
+
+            <label for="sheetPasteInput" style="margin-top:12px;">Or paste copied cells from Google Sheets</label>
+            <textarea id="sheetPasteInput" placeholder="Paste rows here from Google Sheets. Column headers are supported."></textarea>
+
+            <div class="importActions" style="margin-top:12px;">
+              <button class="primaryBtn" id="importSheetBtn" type="button">Import Sheet Data</button>
+              <button class="ghostBtn" id="sampleSheetBtn" type="button">Load Sample Sheet</button>
+              <button class="ghostBtn" id="clearImportedBtn" type="button">Clear Imported Events</button>
+            </div>
+          </div>
+
+          <div class="adminCard">
+            <div class="blockTitle">Supported columns</div>
+            <div class="hintList">
+              <div class="hintItem"><span class="codeHint">division</span> <span class="codeHint">tournament</span> <span class="codeHint">dates</span> <span class="codeHint">location</span></div>
+              <div class="hintItem"><span class="codeHint">day</span> <span class="codeHint">time</span> <span class="codeHint">pool</span> <span class="codeHint">status</span> <span class="codeHint">round</span></div>
+              <div class="hintItem"><span class="codeHint">teamA</span> <span class="codeHint">teamB</span> <span class="codeHint">scoreA</span> <span class="codeHint">scoreB</span></div>
+              <div class="hintItem"><span class="codeHint">seedA</span> <span class="codeHint">seedB</span> <span class="codeHint">rosterA</span> <span class="codeHint">rosterB</span></div>
+            </div>
+            <div class="callout" style="margin-top:14px;">Roster cells can look like <span class="codeHint">1 John Doe|2 Max Irving|3 Lucas Ramirez</span>. Separate players with pipes, commas, semicolons, or new lines.</div>
+            <div class="block" style="margin-top:14px;">
+              <div class="blockTitle">What gets built automatically</div>
+              <div class="small">Finley Live will create the tournament, assign it to the selected division, generate the schedule cards, build team rosters, and group bracket rounds from your sheet rows.</div>
+            </div>
+            <div class="small" id="importStatus" style="margin-top:12px;">No import yet.</div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="liveModal" aria-hidden="true">
+  <div class="modalCard">
+    <div class="modalHeader">
+      <div>
+        <div class="eyebrow" id="modalEyebrow">Game Detail</div>
+        <div class="modalTitle" id="modalTitle">Matchup</div>
+      </div>
+      <button class="closeBtn" id="closeModalBtn" type="button">Close</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
 <script>
-/***********************
+const LIVE_STORAGE_KEY = 'finleyLiveImportedV2';
+const LIVE_FEATURED_KEY = 'finleyLiveFeaturedV2';
+const DIVISIONS = ['All','10U','12U','14U','16U','18U','NCAA'];
+const defaultLiveTournaments = [
+  {id:'bronx-spring-open',division:'NCAA',name:'Bronx Spring Open',dates:'April 12–13',location:'Bronx, NY',featured:true,games:[{id:'g1',day:'Saturday',matchup:'LIU vs Fordham',teamA:'LIU',teamB:'Fordham',scoreA:12,scoreB:9,time:'Sat 9:00 AM',pool:'Pool A',status:'Final',round:'Semifinals',period:'Final'},{id:'g2',day:'Saturday',matchup:'Brown vs Iona',teamA:'Brown',teamB:'Iona',scoreA:11,scoreB:10,time:'Sat 10:15 AM',pool:'Pool A',status:'Final',round:'Semifinals',period:'Final'},{id:'g3',day:'Saturday',matchup:'LIU vs Brown',teamA:'LIU',teamB:'Brown',scoreA:8,scoreB:7,time:'Sat 4:00 PM',pool:'Pool A',status:'Live',round:'Final',period:'2nd Quarter'},{id:'g4',day:'Sunday',matchup:'Fordham vs Iona',teamA:'Fordham',teamB:'Iona',scoreA:null,scoreB:null,time:'Sun 9:30 AM',pool:'Pool A',status:'Next',round:'3rd Place',period:'Warmup'}],teams:[{name:'LIU',seed:'#1',roster:[['1','N. Goalie'],['2','M. Irving'],['3','D. Rothenberg'],['4','L. Ramirez'],['5','A. Smith'],['6','J. Perez']]},{name:'Brown',seed:'#2',roster:[['1','J. Carter'],['2','E. Miles'],['3','P. Jones'],['4','T. Riley'],['5','N. Hall'],['6','C. West']]},{name:'Fordham',seed:'#3',roster:[['1','L. Shea'],['2','D. Kerr'],['3','M. Vega'],['4','T. Walsh'],['5','R. Diaz'],['6','C. Mooney']]},{name:'Iona',seed:'#4',roster:[['1','A. Park'],['2','S. Lee'],['3','M. Grant'],['4','J. Fox'],['5','R. Allen'],['6','P. Hunt']]}]},
+  {id:'hb-10u-splash',division:'10U',name:'HB 10U Splash Classic',dates:'June 7',location:'Huntington Beach, CA',featured:false,games:[{id:'u10-1',day:'Saturday',matchup:'Sharks vs Tritons',teamA:'Sharks',teamB:'Tritons',scoreA:6,scoreB:5,time:'Sat 8:00 AM',pool:'Pool B',status:'Final',round:'Pool Play',period:'Final'},{id:'u10-2',day:'Saturday',matchup:'Seals vs Waves',teamA:'Seals',teamB:'Waves',scoreA:4,scoreB:4,time:'Sat 9:00 AM',pool:'Pool B',status:'Final',round:'Pool Play',period:'Final'},{id:'u10-3',day:'Saturday',matchup:'Sharks vs Waves',teamA:'Sharks',teamB:'Waves',scoreA:null,scoreB:null,time:'Sat 1:30 PM',pool:'Pool A',status:'Next',round:'Championship',period:'Warmup'}],teams:[{name:'Sharks',seed:'#1',roster:[['1','Ava'],['2','Milo'],['3','Nico'],['4','Rory']]},{name:'Tritons',seed:'#2',roster:[['1','Leo'],['2','Jude'],['3','Ivy'],['4','Skye']]},{name:'Seals',seed:'#3',roster:[['1','Elle'],['2','Kai'],['3','Noah'],['4','Mia']]},{name:'Waves',seed:'#4',roster:[['1','Luca'],['2','Remy'],['3','Cruz'],['4','June']]}]},
+  {id:'gold-coast-14u',division:'14U',name:'Gold Coast 14U Invite',dates:'June 21–22',location:'Irvine, CA',featured:false,games:[{id:'u14-1',day:'Saturday',matchup:'SOCAL vs Vanguard',teamA:'SOCAL',teamB:'Vanguard',scoreA:9,scoreB:8,time:'Sat 10:00 AM',pool:'North',status:'Final',round:'Quarterfinal',period:'Final'},{id:'u14-2',day:'Saturday',matchup:'Set vs Pride',teamA:'Set',teamB:'Pride',scoreA:7,scoreB:6,time:'Sat 11:20 AM',pool:'North',status:'Final',round:'Quarterfinal',period:'Final'},{id:'u14-3',day:'Sunday',matchup:'SOCAL vs Set',teamA:'SOCAL',teamB:'Set',scoreA:5,scoreB:4,time:'Sun 12:00 PM',pool:'Champ',status:'Live',round:'Final',period:'3rd Quarter'}],teams:[{name:'SOCAL',seed:'#1',roster:[['1','Goalie'],['2','Driver'],['3','Point'],['4','Flat'],['5','Wing']]},{name:'Vanguard',seed:'#2',roster:[['1','Hart'],['2','Cole'],['3','Jax'],['4','Finn'],['5','Zane']]},{name:'Set',seed:'#3',roster:[['1','Moss'],['2','Lane'],['3','Ari'],['4','Cade'],['5','Rex']]},{name:'Pride',seed:'#4',roster:[['1','Kai'],['2','Emi'],['3','Taj'],['4','Rae'],['5','Lux']]}]},
+  {id:'east-18u-champs',division:'18U',name:'East Coast 18U Championships',dates:'July 12–13',location:'Princeton, NJ',featured:false,games:[{id:'u18-1',day:'Saturday',matchup:'Greenwich vs Naval',teamA:'Greenwich',teamB:'Naval',scoreA:null,scoreB:null,time:'Sat 2:00 PM',pool:'East',status:'Next',round:'Semifinal',period:'Warmup'},{id:'u18-2',day:'Saturday',matchup:'SHAQ vs Pride',teamA:'SHAQ',teamB:'Pride',scoreA:null,scoreB:null,time:'Sat 3:15 PM',pool:'East',status:'Next',round:'Semifinal',period:'Warmup'}],teams:[{name:'Greenwich',seed:'#1',roster:[['1','G1'],['2','G2'],['3','G3']]},{name:'Naval',seed:'#2',roster:[['1','N1'],['2','N2'],['3','N3']]},{name:'SHAQ',seed:'#3',roster:[['1','S1'],['2','S2'],['3','S3']]},{name:'Pride',seed:'#4',roster:[['1','P1'],['2','P2'],['3','P3']]}]}
+];
+const liveEls = {}; let liveTournaments = []; let currentTournament = null; let currentDivision = 'All'; let selectedDay = 'All'; let liveOnly = false; let lastRefreshStamp = new Date();
+function slugify(value){return String(value||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'event';}
+function uidLive(){return Math.random().toString(36).slice(2,10);} function clone(obj){return JSON.parse(JSON.stringify(obj));}
+function formatScore(a,b){return Number.isFinite(a)&&Number.isFinite(b)?`${a}–${b}`:'—';}
+function normalizeHeader(v){return String(v||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'');}
+function splitCsvLine(line){const out=[]; let cell='', quote=false; for(let i=0;i<line.length;i++){const c=line[i]; if(c==='"'){ if(quote&&line[i+1]==='"'){cell+='"'; i++;} else quote=!quote; } else if(c===','&&!quote){ out.push(cell); cell=''; } else cell+=c;} out.push(cell); return out;}
+function normalizeRosterCell(value){ if(!value) return []; return String(value).split(/\||\n|;|,/).map(x=>x.trim()).filter(Boolean).map((part,i)=>{ const m=part.match(/^(\d+)\s+(.+)$/); return m?[m[1],m[2].trim()]:[String(i+1),part]; }); }
+function dedupeTeams(teams){ const map=new Map(); teams.forEach(team=>{ if(!team||!team.name) return; const key=team.name.trim(); if(!map.has(key)) map.set(key,{name:key,seed:team.seed||'',roster:team.roster||[]}); else { const e=map.get(key); if(!e.seed&&team.seed) e.seed=team.seed; if((!e.roster||!e.roster.length)&&team.roster&&team.roster.length) e.roster=team.roster; } }); return Array.from(map.values()); }
+function deriveBracket(games){ const order=['Pool Play','Round Robin','Quarterfinal','Quarterfinals','Semifinal','Semifinals','Final','Championship','3rd Place','Placement']; const grouped=new Map(); games.forEach(game=>{ const round=game.round||game.period||'Games'; if(!grouped.has(round)) grouped.set(round,[]); grouped.get(round).push({a:game.teamA||game.matchup.split(' vs ')[0]||'TBD', b:game.teamB||game.matchup.split(' vs ')[1]||'TBD', sa:Number.isFinite(game.scoreA)?String(game.scoreA):'', sb:Number.isFinite(game.scoreB)?String(game.scoreB):'', meta:[game.day,game.time,game.pool].filter(Boolean).join(' • ')}); }); return Array.from(grouped.keys()).sort((a,b)=>{const ia=order.indexOf(a), ib=order.indexOf(b); if(ia===-1&&ib===-1) return a.localeCompare(b); if(ia===-1) return 1; if(ib===-1) return -1; return ia-ib;}).map(round=>({round,matches:grouped.get(round)})); }
+function recalcTournament(t){ t.days=Array.from(new Set((t.games||[]).map(g=>g.day).filter(Boolean))); t.teams=dedupeTeams(t.teams||[]); t.bracket=deriveBracket(t.games||[]); t.teamsCount=t.teams.length; t.gamesCount=(t.games||[]).length; t.liveCount=(t.games||[]).filter(g=>g.status==='Live').length; return t; }
+function loadLiveTournaments(){ let imported=[]; try{imported=JSON.parse(localStorage.getItem(LIVE_STORAGE_KEY)||'[]');}catch{} const featuredId=localStorage.getItem(LIVE_FEATURED_KEY)||''; liveTournaments=[...clone(defaultLiveTournaments),...clone(imported)].map(recalcTournament); if(featuredId) liveTournaments.forEach(t=>t.featured=t.id===featuredId); if(!liveTournaments.some(t=>t.featured)&&liveTournaments[0]) liveTournaments[0].featured=true; }
+function persistImportedTournaments(){ const imported=liveTournaments.filter(t=>!defaultLiveTournaments.some(d=>d.id===t.id)); localStorage.setItem(LIVE_STORAGE_KEY, JSON.stringify(imported)); const featured=liveTournaments.find(t=>t.featured); if(featured) localStorage.setItem(LIVE_FEATURED_KEY, featured.id); }
+function getVisibleTournaments(){ return liveTournaments.filter(t=>currentDivision==='All'||t.division===currentDivision); }
+function ensureCurrentTournament(){ const visible=getVisibleTournaments(); if(!visible.length){ currentTournament=null; return; } currentTournament=visible.find(t=>currentTournament&&t.id===currentTournament.id)||visible.find(t=>t.featured)||visible[0]; }
+function updateTimestamp(){ liveEls.liveTimestamp.textContent=`Last refresh: ${lastRefreshStamp.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}`; }
+function renderDivisionFilters(){ liveEls.divisionFilters.innerHTML=DIVISIONS.map(d=>`<button class="divisionPill ${d===currentDivision?'active':''}" data-division="${d}" type="button">${d}</button>`).join(''); liveEls.adminDivisionSelect.innerHTML=DIVISIONS.filter(d=>d!=='All').map(d=>`<option value="${d}">${d}</option>`).join(''); if(currentDivision!=='All') liveEls.adminDivisionSelect.value=currentDivision; liveEls.divisionFilters.querySelectorAll('[data-division]').forEach(btn=>btn.addEventListener('click', ()=>{ currentDivision=btn.dataset.division; renderTournamentOptions(); renderDivisionFilters(); renderCurrentTournament(); })); }
+function renderTournamentOptions(){ const visible=getVisibleTournaments(); liveEls.tournamentSelect.innerHTML=visible.map(t=>`<option value="${t.id}">${t.name} • ${t.division} • ${t.dates}</option>`).join(''); ensureCurrentTournament(); if(currentTournament) liveEls.tournamentSelect.value=currentTournament.id; }
+function renderDayFilters(){ if(!currentTournament){ liveEls.dayFilters.innerHTML=''; return; } const days=['All', ...(currentTournament.days||[])]; liveEls.dayFilters.innerHTML=days.map(day=>`<button class="chipBtn ${selectedDay===day?'active':''}" data-day="${day}" type="button">${day}</button>`).join(''); liveEls.dayFilters.querySelectorAll('[data-day]').forEach(btn=>btn.addEventListener('click', ()=>{ selectedDay=btn.dataset.day; renderDayFilters(); renderSchedule(); })); }
+function getFilteredGames(){ if(!currentTournament) return []; return currentTournament.games.filter(g=>(selectedDay==='All'||g.day===selectedDay)&&(!liveOnly||g.status==='Live')); }
+function setActivePanel(id){ document.querySelectorAll('#livePage .tabBtn[data-panel]').forEach(btn=>btn.classList.toggle('active',btn.dataset.panel===id)); document.querySelectorAll('#livePage .livePanel').forEach(panel=>panel.classList.toggle('active',panel.id===id)); }
+function showModal(title,eyebrow,html){ liveEls.modalTitle.textContent=title; liveEls.modalEyebrow.textContent=eyebrow; liveEls.modalBody.innerHTML=html; liveEls.liveModal.classList.add('show'); liveEls.liveModal.setAttribute('aria-hidden','false'); }
+function closeModal(){ liveEls.liveModal.classList.remove('show'); liveEls.liveModal.setAttribute('aria-hidden','true'); }
+function openGameDetail(id){ const game=currentTournament.games.find(g=>g.id===id); if(!game) return; showModal(game.matchup,'Game Detail',`<div class="detailGrid"><div class="detailTile"><div class="detailLabel">Score</div><div class="detailValue">${formatScore(game.scoreA,game.scoreB)}</div></div><div class="detailTile"><div class="detailLabel">Status</div><div class="detailValue">${game.status}</div></div><div class="detailTile"><div class="detailLabel">Round</div><div class="detailValue">${game.round||game.period||'Game'}</div></div><div class="detailTile"><div class="detailLabel">When / Where</div><div class="detailValue">${game.time} • ${game.pool}</div></div></div><div class="inlineSplit"><div class="detailTile"><div class="detailLabel">Team A</div><div class="detailValue">${game.teamA||'TBD'}</div></div><div class="detailTile"><div class="detailLabel">Team B</div><div class="detailValue">${game.teamB||'TBD'}</div></div></div><div class="modalActions" style="margin-top:14px;"><button class="primaryBtn" type="button" id="jumpTeamsBtn">Jump to Teams</button><button class="ghostBtn" type="button" id="jumpBracketBtn">Jump to Bracket</button></div>`); document.getElementById('jumpTeamsBtn').onclick=()=>{closeModal(); setActivePanel('teamsPanel');}; document.getElementById('jumpBracketBtn').onclick=()=>{closeModal(); setActivePanel('bracketPanel');}; }
+function openTeamList(){ showModal(`${currentTournament.name} Teams`,'Team Directory',`<div class="teamsGrid">${currentTournament.teams.map(team=>`<article class="teamCard"><div class="teamTop"><div class="teamName">${team.name}</div><div class="teamSeed">${team.seed||''}</div></div><div class="roster">${(team.roster||[]).map(player=>`<div class="player"><span>#${player[0]} ${player[1]}</span><span>Cap ${player[0]}</span></div>`).join('')}</div></article>`).join('')}</div>`); }
+function renderSchedule(){ const games=getFilteredGames(); if(!games.length){ liveEls.scheduleGrid.innerHTML='<div class="callout">No games match this filter right now. Try switching the day, division, or live-only toggle.</div>'; return; } liveEls.scheduleGrid.innerHTML=games.map(game=>{ const statusClass=game.status==='Live'?'live':(game.status==='Final'?'final':'next'); return `<article class="gameCard"><div class="gameTop"><div class="gameTeams">${game.matchup}</div><div class="statusPill ${statusClass}">${game.status}</div></div><div class="scoreLine">${formatScore(game.scoreA,game.scoreB)}</div><div class="meta">${game.period?game.period+'<br>':''}${game.time} • ${game.pool}<br>${game.round||game.day||''}</div><div class="cardActions"><button type="button" data-detail="${game.id}">Game Detail</button><button type="button" data-viewteams="${game.id}">View Teams</button></div></article>`; }).join(''); liveEls.scheduleGrid.querySelectorAll('[data-detail]').forEach(btn=>btn.addEventListener('click',()=>openGameDetail(btn.dataset.detail))); liveEls.scheduleGrid.querySelectorAll('[data-viewteams]').forEach(btn=>btn.addEventListener('click',()=>openTeamList())); }
+function renderBracket(){ if(!currentTournament){ liveEls.bracketGrid.innerHTML=''; return; } currentTournament.bracket=deriveBracket(currentTournament.games); liveEls.bracketGrid.innerHTML=currentTournament.bracket.map(round=>`<div class="round"><div class="roundTitle">${round.round}</div>${round.matches.map(match=>`<div class="match"><div class="matchRow"><span>${match.a}</span><span>${match.sa||'—'}</span></div><div class="matchRow"><span>${match.b}</span><span>${match.sb||'—'}</span></div><div class="matchMeta">${match.meta}</div></div>`).join('')}</div>`).join(''); }
+function renderTeams(){ if(!currentTournament){ liveEls.teamsGrid.innerHTML=''; return; } liveEls.teamsGrid.innerHTML=currentTournament.teams.map(team=>`<article class="teamCard"><div class="teamTop"><div class="teamName">${team.name}</div><div class="teamSeed">${team.seed||''}</div></div><div class="roster">${(team.roster||[]).map(player=>`<div class="player"><span>#${player[0]} ${player[1]}</span><span>Cap ${player[0]}</span></div>`).join('')}</div></article>`).join(''); }
+function renderFeatured(){ const featured=liveTournaments.find(t=>t.featured); liveEls.featuredBadgeWrap.innerHTML=featured?`<div class="featuredBadge">★ ${featured.name} • ${featured.division}</div>`:'<div class="small">No featured tournament selected.</div>'; }
+function renderCurrentTournament(){ ensureCurrentTournament(); if(!currentTournament){ liveEls.pageTitle.textContent='No tournaments in this division yet'; liveEls.pageSubtitle.textContent='Import a sheet in the Admin tab to add one.'; liveEls.eyebrowTitle.textContent='Empty state'; liveEls.heroStats.innerHTML=''; liveEls.scheduleGrid.innerHTML='<div class="callout">This division does not have any tournaments yet.</div>'; liveEls.bracketGrid.innerHTML=''; liveEls.teamsGrid.innerHTML=''; renderFeatured(); return; } recalcTournament(currentTournament); liveEls.pageTitle.textContent=currentTournament.name; liveEls.pageSubtitle.textContent=`${currentTournament.dates} • ${currentTournament.location}`; liveEls.eyebrowTitle.textContent=currentTournament.featured?'Featured event':'Tournament'; liveEls.divisionBadge.textContent=`Division: ${currentTournament.division}`; liveEls.featureBtn.textContent=currentTournament.featured?'Featured Tournament':'Set as Featured'; liveEls.heroStats.innerHTML=[{num:currentTournament.teamsCount,label:'Teams'},{num:currentTournament.gamesCount,label:'Games'},{num:currentTournament.liveCount,label:'Live now'},{num:getVisibleTournaments().length,label:currentDivision==='All'?'Events total':`${currentDivision} events`}].map(s=>`<div class="stat"><div class="statNum">${s.num}</div><div class="statLabel">${s.label}</div></div>`).join(''); renderDayFilters(); renderSchedule(); renderBracket(); renderTeams(); renderFeatured(); updateTimestamp(); }
+function advanceGame(game){ const periods=['1st Quarter','2nd Quarter','Halftime','3rd Quarter','4th Quarter','Final']; if(game.status==='Live'){ if(Math.random()>0.45) game.scoreA=(game.scoreA??0)+1; if(Math.random()>0.48) game.scoreB=(game.scoreB??0)+1; const idx=Math.max(0,periods.indexOf(game.period||'1st Quarter')); if(idx>=periods.length-2||Math.random()>0.72){ game.period='Final'; game.status='Final'; } else game.period=periods[idx+1]; } }
+function refreshTournamentData(){ if(!currentTournament) return; let liveGames=currentTournament.games.filter(g=>g.status==='Live'); if(!liveGames.length){ const nextGame=currentTournament.games.find(g=>g.status==='Next'); if(nextGame){ nextGame.status='Live'; nextGame.period='1st Quarter'; nextGame.scoreA=nextGame.scoreA??0; nextGame.scoreB=nextGame.scoreB??0; liveGames=[nextGame]; } } liveGames.forEach(advanceGame); recalcTournament(currentTournament); const idx=liveTournaments.findIndex(t=>t.id===currentTournament.id); if(idx>=0) liveTournaments[idx]=currentTournament; lastRefreshStamp=new Date(); persistImportedTournaments(); renderCurrentTournament(); }
+function setFeaturedTournament(){ if(!currentTournament) return; liveTournaments.forEach(t=>t.featured=t.id===currentTournament.id); persistImportedTournaments(); renderCurrentTournament(); }
+
+function parseRawMatrix(text){
+  const lines=String(text||'').replace(/\r/g,'').split('\n').filter(line=>line.trim());
+  if(!lines.length) return [];
+  const delimiter=lines.some(line=>line.includes('\t'))?'\t':',';
+  return lines.map(line=>delimiter==='\t'?line.split('\t'):splitCsvLine(line));
+}
+function parseDelimitedText(text){
+  const rows=parseRawMatrix(text);
+  if(!rows.length) return [];
+  const headers=rows[0].map(cell=>normalizeHeader(cell));
+  return rows.slice(1).map(row=>Object.fromEntries(headers.map((header,i)=>[header,(row[i]||'').trim()]))).filter(obj=>Object.values(obj).some(Boolean));
+}
+function cleanImportedTeamName(name){
+  return String(name||'').replace(/\s+/g,' ').replace(/\s*-\s*$/,'').trim();
+}
+function looksLikeTimeCell(value){
+  return /^\d{1,2}:\d{2}\s*(AM|PM)$/i.test(String(value||'').trim());
+}
+function looksLikeGameNumber(value){
+  return /^(?:\d+\w*|\w+\s*\d+|\d+)$/.test(String(value||'').trim()) || /^(?:\d{2}U|NCAA|HS|MS)/i.test(String(value||'').trim());
+}
+function isScheduleHeaderAt(row,start){
+  return String(row[start]||'').trim().toLowerCase()==='game #' && String(row[start+1]||'').trim().toLowerCase()==='time';
+}
+function parseMetaBlock(row,start){
+  const day=String(row[start]||'').trim();
+  const date=String(row[start+1]||'').trim();
+  if(!/^(saturday|sunday|friday|monday|tuesday|wednesday|thursday)$/i.test(day)) return null;
+  let host=''; let location=''; let division='';
+  for(let i=start+2;i<Math.min(row.length,start+9);i++){
+    const cell=String(row[i]||'').trim();
+    const next=String(row[i+1]||'').trim();
+    if(/^host:?$/i.test(cell)) host=next;
+    if(/^location:?$/i.test(cell)) location=next;
+    if(/^(10u|12u|14u|16u|18u|ncaa)$/i.test(cell)) division=cell.toUpperCase();
+  }
+  return {dayLabel:[day,date].filter(Boolean).join(' '), host, location, division};
+}
+function parseVisualTournamentFromMatrix(matrix, forcedDivision, sourceName){
+  const contexts={0:{dayLabel:'Day 1',host:'',location:''},9:{dayLabel:'Day 2',host:'',location:''}};
+  const games=[]; const teamMap=new Map(); const dates=new Set(); const locations=new Set(); const divisionsSeen=new Set();
+  const addTeam=(name)=>{
+    const clean=cleanImportedTeamName(name);
+    if(!clean || /^win gm|^los gm|^\d+(st|nd|rd|th)\s+in\s+/i.test(clean)) return;
+    if(!teamMap.has(clean)) teamMap.set(clean,{name:clean, seed:'', roster:[]});
+  };
+  const addGame=(ctx,row,start,rowIndex)=>{
+    const code=String(row[start]||'').trim();
+    const time=String(row[start+1]||'').trim();
+    const teamA=cleanImportedTeamName(row[start+2]||'');
+    const rawScoreA=String(row[start+3]||'').trim();
+    const teamB=cleanImportedTeamName(row[start+4]||'');
+    const rawScoreB=String(row[start+5]||'').trim();
+    const divisionCell=String(row[start+6]||'').trim();
+    const notes=String(row[start+7]||'').trim();
+    if(!time || !looksLikeTimeCell(time)) return;
+    if(!teamA || !teamB) return;
+    const scoreA = rawScoreA==='' ? null : Number(rawScoreA);
+    const scoreB = rawScoreB==='' ? null : Number(rawScoreB);
+    const hasScores = Number.isFinite(scoreA) && Number.isFinite(scoreB);
+    const poolBits=[ctx.host, ctx.location].filter(Boolean).join(' • ') || 'TBD';
+    const roundBits=[notes, divisionCell ? `Division ${divisionCell}` : ''].filter(Boolean).join(' • ') || 'Games';
+    games.push({
+      id:`imp-${rowIndex}-${start}-${uidLive()}`,
+      day:ctx.dayLabel || 'Day 1',
+      matchup:`${teamA} vs ${teamB}`,
+      teamA,
+      teamB,
+      scoreA:hasScores ? scoreA : null,
+      scoreB:hasScores ? scoreB : null,
+      time,
+      pool:poolBits,
+      status:hasScores ? 'Final' : 'Next',
+      round:roundBits,
+      period:hasScores ? 'Final' : 'Warmup',
+      gameCode:code
+    });
+    addTeam(teamA);
+    addTeam(teamB);
+    if(ctx.dayLabel) dates.add(ctx.dayLabel);
+    if(ctx.location) locations.add(ctx.location);
+    if(divisionCell) divisionsSeen.add(divisionCell);
+  };
+  for(let r=0;r<matrix.length;r++){
+    const row=matrix[r];
+    [0,9].forEach(start=>{
+      const meta=parseMetaBlock(row,start);
+      if(meta){
+        contexts[start]={dayLabel:meta.dayLabel||contexts[start].dayLabel,host:meta.host||contexts[start].host,location:meta.location||contexts[start].location};
+        if(meta.dayLabel) dates.add(meta.dayLabel);
+        if(meta.location) locations.add(meta.location);
+        if(meta.division) divisionsSeen.add(meta.division);
+      }
+    });
+    [0,9].forEach(start=>{
+      if(isScheduleHeaderAt(row,start)) return;
+      const code=String(row[start]||'').trim();
+      const time=String(row[start+1]||'').trim();
+      if(code && time && looksLikeTimeCell(time) && looksLikeGameNumber(code)){
+        addGame(contexts[start],row,start,r);
+      }
+    });
+  }
+  if(!games.length) return null;
+  const detectedDivision = forcedDivision || ([...divisionsSeen].some(v=>String(v).includes('18'))?'18U':([...divisionsSeen].some(v=>String(v).includes('16'))?'16U':'NCAA'));
+  const nameBase = sourceName ? String(sourceName).replace(/\.(csv|tsv|txt)$/i,'') : 'Imported Tournament';
+  const tournament={
+    id:`${slugify(nameBase)}-${Date.now().toString().slice(-5)}`,
+    division:detectedDivision,
+    name:nameBase,
+    dates:[...dates].join(' • ') || 'TBD',
+    location:locations.size>1 ? 'Multiple sites' : ([...locations][0] || 'TBD'),
+    featured:false,
+    games,
+    teams:[...teamMap.values()]
+  };
+  return recalcTournament(tournament);
+}
+function buildTournamentFromRows(rows,forcedDivision,sourceName){
+  if(!rows.length) throw new Error('No rows were found in the uploaded data.');
+  const first=rows[0];
+  const division=forcedDivision||first.division||'NCAA';
+  const name=(sourceName ? String(sourceName).replace(/\.(csv|tsv|txt)$/i,'') : '') || first.tournament||first.name||'Imported Tournament';
+  const tournament={id:`${slugify(name)}-${Date.now().toString().slice(-5)}`,division,name,dates:first.dates||first.date||'TBD',location:first.location||first.site||'TBD',featured:false,games:[],teams:[]};
+  rows.forEach((row,index)=>{
+    const teamA=row.teama||row.team1||row.home||'';
+    const teamB=row.teamb||row.team2||row.away||'';
+    if(!teamA&&!teamB) return;
+    const scoreA=row.scorea===''||row.scorea==null?null:Number(row.scorea);
+    const scoreB=row.scoreb===''||row.scoreb==null?null:Number(row.scoreb);
+    tournament.games.push({id:`imp-${index}-${uidLive()}`,day:row.day||'Day 1',matchup:`${teamA||'TBD'} vs ${teamB||'TBD'}`,teamA:teamA||'TBD',teamB:teamB||'TBD',scoreA:Number.isFinite(scoreA)?scoreA:null,scoreB:Number.isFinite(scoreB)?scoreB:null,time:row.time||row.start||'TBD',pool:row.pool||row.venue||'Pool A',status:row.status||(Number.isFinite(scoreA)&&Number.isFinite(scoreB)?'Final':'Next'),round:row.round||row.stage||'Games',period:row.period||((Number.isFinite(scoreA)&&Number.isFinite(scoreB))?'Final':'Warmup')});
+    tournament.teams.push({name:teamA,seed:row.seeda||'',roster:normalizeRosterCell(row.rostera||row.homeroster||'')});
+    tournament.teams.push({name:teamB,seed:row.seedb||'',roster:normalizeRosterCell(row.rosterb||row.awayroster||'')});
+  });
+  return recalcTournament(tournament);
+}
+function importSheetData(rawText, sourceName='Imported Tournament'){
+  try{
+    const rows=parseDelimitedText(rawText);
+    let tournament=null;
+    const standardRowsHaveTeams = rows.some(row=>(row.teama||row.team1||row.home||row.teamb||row.team2||row.away));
+    if(standardRowsHaveTeams){
+      tournament=buildTournamentFromRows(rows, liveEls.adminDivisionSelect.value||'NCAA', sourceName);
+    } else {
+      const matrix=parseRawMatrix(rawText);
+      tournament=parseVisualTournamentFromMatrix(matrix, liveEls.adminDivisionSelect.value||'NCAA', sourceName);
+      if(!tournament) throw new Error('This file looks like a visual schedule sheet, but I could not find readable game rows in it yet.');
+    }
+    liveTournaments.push(tournament);
+    currentDivision=tournament.division;
+    currentTournament=tournament;
+    selectedDay='All';
+    liveOnly=false;
+    persistImportedTournaments();
+    renderDivisionFilters();
+    renderTournamentOptions();
+    renderCurrentTournament();
+    liveEls.importStatus.textContent=`Imported ${tournament.name} into ${tournament.division} with ${tournament.gamesCount} games and ${tournament.teamsCount} teams.`;
+    liveEls.sheetPasteInput.value='';
+    setActivePanel('schedulePanel');
+  } catch(error){
+    liveEls.importStatus.textContent=error.message;
+  }
+}
+function convertGoogleSheetUrlToCsvExport(rawUrl){
+  if(!rawUrl) throw new Error('Paste a Google Sheets link first.');
+  let urlString=String(rawUrl).trim();
+  let url;
+  try{ url=new URL(urlString); } catch(error){ throw new Error('That link could not be read as a valid URL.'); }
+  const host=url.hostname.replace(/^www\./,'');
+  if(url.searchParams.get('output')==='csv' || /format=csv/i.test(url.search)) return url.toString();
+  if(host==='docs.google.com'){
+    const match=url.pathname.match(/\/spreadsheets\/d\/([^/]+)/);
+    if(match){
+      const sheetId=match[1];
+      const gid=url.searchParams.get('gid') || '0';
+      return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+    }
+  }
+  return url.toString();
+}
+async function importSheetFromUrl(rawUrl){
+  const convertedUrl=convertGoogleSheetUrlToCsvExport(rawUrl);
+  liveEls.importStatus.textContent='Fetching sheet data from link...';
+  try{
+    const response=await fetch(convertedUrl);
+    if(!response.ok) throw new Error(`Request failed with status ${response.status}.`);
+    const text=await response.text();
+    if(!text || !text.trim()) throw new Error('The linked sheet returned empty data.');
+    importSheetData(text, (rawUrl||convertedUrl||'Imported Tournament').split('/').pop() || 'Imported Tournament');
+    liveEls.importStatus.textContent=`Imported sheet from link: ${convertedUrl}`;
+  } catch(error){
+    liveEls.importStatus.textContent=`Could not import from that link. Make sure the tab is public or anyone with the link can view, and that the URL points to a readable Google Sheet tab. ${error.message}`;
+  }
+}
+function getSampleSheetText(){ return ['division\ttournament\tdates\tlocation\tday\ttime\tpool\tstatus\tround\tteamA\tteamB\tscoreA\tscoreB\tseedA\tseedB\trosterA\trosterB','16U\tFinley Summer Cup\tAugust 2-3\tBrooklyn, NY\tSaturday\t9:00 AM\tPool A\tFinal\tSemifinal\tLIU Blue\tHydras\t10\t8\t#1\t#4\t1 Maya|2 Ella|3 Zoe|4 Quinn\t1 Cam|2 Leo|3 Finn|4 Knox','16U\tFinley Summer Cup\tAugust 2-3\tBrooklyn, NY\tSaturday\t10:15 AM\tPool A\tFinal\tSemifinal\tTritons\tWave Riders\t7\t6\t#2\t#3\t1 Jude|2 Nico|3 Cruz|4 Jax\t1 Skye|2 June|3 Remy|4 Luca','16U\tFinley Summer Cup\tAugust 2-3\tBrooklyn, NY\tSunday\t12:00 PM\tChampionship Pool\tNext\tFinal\tLIU Blue\tTritons\t\t\t#1\t#2\t1 Maya|2 Ella|3 Zoe|4 Quinn\t1 Jude|2 Nico|3 Cruz|4 Jax'].join('\n'); }
+function clearImportedTournaments(){ localStorage.removeItem(LIVE_STORAGE_KEY); localStorage.removeItem(LIVE_FEATURED_KEY); loadLiveTournaments(); currentDivision='All'; currentTournament=liveTournaments.find(t=>t.featured)||liveTournaments[0]||null; renderDivisionFilters(); renderTournamentOptions(); renderCurrentTournament(); liveEls.importStatus.textContent='Imported tournaments cleared. Default demo data restored.'; }
+function initLivePage(){ loadLiveTournaments(); liveEls.boardHeader=document.querySelector('body > header'); liveEls.boardMain=document.querySelector('body > main'); liveEls.livePage=document.getElementById('livePage'); liveEls.openBtn=document.getElementById('openLiveBtn'); liveEls.backBtn=document.getElementById('backToBoardBtn'); liveEls.inlineLaunchBtn=document.getElementById('launchLiveInlineBtn'); liveEls.tournamentSelect=document.getElementById('tournamentSelect'); liveEls.divisionFilters=document.getElementById('divisionFilters'); liveEls.adminDivisionSelect=document.getElementById('adminDivisionSelect'); liveEls.pageTitle=document.getElementById('pageTitle'); liveEls.pageSubtitle=document.getElementById('pageSubtitle'); liveEls.eyebrowTitle=document.getElementById('eyebrowTitle'); liveEls.heroStats=document.getElementById('heroStats'); liveEls.dayFilters=document.getElementById('dayFilters'); liveEls.scheduleGrid=document.getElementById('scheduleGrid'); liveEls.bracketGrid=document.getElementById('bracketGrid'); liveEls.teamsGrid=document.getElementById('teamsGrid'); liveEls.featuredBadgeWrap=document.getElementById('featuredBadgeWrap'); liveEls.divisionBadge=document.getElementById('divisionBadge'); liveEls.liveTimestamp=document.getElementById('liveTimestamp'); liveEls.allGamesBtn=document.getElementById('allGamesBtn'); liveEls.liveOnlyBtn=document.getElementById('liveOnlyBtn'); liveEls.refreshBtn=document.getElementById('refreshBtn'); liveEls.featureBtn=document.getElementById('featureBtn'); liveEls.sheetUrlInput=document.getElementById('sheetUrlInput'); liveEls.importUrlBtn=document.getElementById('importUrlBtn'); liveEls.sheetFileInput=document.getElementById('sheetFileInput'); liveEls.sheetPasteInput=document.getElementById('sheetPasteInput'); liveEls.importSheetBtn=document.getElementById('importSheetBtn'); liveEls.sampleSheetBtn=document.getElementById('sampleSheetBtn'); liveEls.clearImportedBtn=document.getElementById('clearImportedBtn'); liveEls.importStatus=document.getElementById('importStatus'); liveEls.liveModal=document.getElementById('liveModal'); liveEls.modalTitle=document.getElementById('modalTitle'); liveEls.modalEyebrow=document.getElementById('modalEyebrow'); liveEls.modalBody=document.getElementById('modalBody'); liveEls.closeModalBtn=document.getElementById('closeModalBtn'); currentTournament=liveTournaments.find(t=>t.featured)||liveTournaments[0]||null; renderDivisionFilters(); renderTournamentOptions(); liveEls.tournamentSelect.addEventListener('change',e=>{ currentTournament=liveTournaments.find(t=>t.id===e.target.value)||null; selectedDay='All'; liveOnly=false; liveEls.allGamesBtn.classList.add('active'); liveEls.liveOnlyBtn.classList.remove('active'); renderCurrentTournament(); }); document.querySelectorAll('#livePage .tabBtn[data-panel]').forEach(btn=>btn.addEventListener('click',()=>setActivePanel(btn.dataset.panel))); liveEls.allGamesBtn.addEventListener('click',()=>{ liveOnly=false; liveEls.allGamesBtn.classList.add('active'); liveEls.liveOnlyBtn.classList.remove('active'); renderSchedule(); }); liveEls.liveOnlyBtn.addEventListener('click',()=>{ liveOnly=true; liveEls.liveOnlyBtn.classList.add('active'); liveEls.allGamesBtn.classList.remove('active'); renderSchedule(); }); liveEls.refreshBtn.addEventListener('click',refreshTournamentData); liveEls.featureBtn.addEventListener('click',setFeaturedTournament); liveEls.openBtn.addEventListener('click',openLivePage); if(liveEls.inlineLaunchBtn) liveEls.inlineLaunchBtn.addEventListener('click',openLivePage); liveEls.backBtn.addEventListener('click',closeLivePage); liveEls.closeModalBtn.addEventListener('click',closeModal); liveEls.liveModal.addEventListener('click',e=>{ if(e.target===liveEls.liveModal) closeModal(); }); document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); }); liveEls.importSheetBtn.addEventListener('click',()=>{ const pasted=liveEls.sheetPasteInput.value.trim(); if(pasted) return importSheetData(pasted); const file=liveEls.sheetFileInput.files&&liveEls.sheetFileInput.files[0]; if(!file){ liveEls.importStatus.textContent='Paste sheet rows, use Import From Link, or choose a CSV or TSV file first.'; return; } const reader=new FileReader(); reader.onload=e=>importSheetData(String(e.target.result||''), file.name || 'Imported Tournament'); reader.readAsText(file); }); liveEls.importUrlBtn.addEventListener('click',()=>importSheetFromUrl(liveEls.sheetUrlInput.value)); liveEls.sampleSheetBtn.addEventListener('click',()=>{ liveEls.sheetPasteInput.value=getSampleSheetText(); liveEls.importStatus.textContent='Sample sheet loaded. Click Import Sheet Data to create the tournament.'; }); liveEls.clearImportedBtn.addEventListener('click',clearImportedTournaments); if(window.location.hash==='#live') openLivePage(false); renderCurrentTournament(); }
+function openLivePage(pushHash=true){ liveEls.boardHeader.classList.add('appPageHidden'); liveEls.boardMain.classList.add('appPageHidden'); liveEls.livePage.classList.remove('appPageHidden'); if(pushHash) history.replaceState(null,'','#live'); window.scrollTo({top:0,behavior:'instant'}); }
+function closeLivePage(){ liveEls.livePage.classList.add('appPageHidden'); liveEls.boardHeader.classList.remove('appPageHidden'); liveEls.boardMain.classList.remove('appPageHidden'); history.replaceState(null,'',window.location.pathname+window.location.search); window.scrollTo({top:0,behavior:'instant'}); }
+window.addEventListener('hashchange',()=>{ if(window.location.hash==='#live') openLivePage(false); else if(!liveEls.livePage.classList.contains('appPageHidden')) closeLivePage(); });
+</script>
+
+
+<script>
+/******************************
  * Utilities
  ***********************/
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -1664,6 +2279,7 @@ function init(){
 
   refreshPlaysList();
   loadFromHashIfPresent();
+  initLivePage();
 }
 init();
 </script>
