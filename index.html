@@ -396,7 +396,7 @@
       box-shadow:0 18px 55px rgba(0,0,0,.22);
       min-height:0;
     }
-    #livePage .sidebar{ padding:18px; display:flex; flex-direction:column; gap:16px; }
+    #livePage .sidebar{ padding:18px; display:flex; flex-direction:column; gap:16px; max-height:calc(100vh - 120px); overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
     #livePage .content{ padding:18px; display:flex; flex-direction:column; gap:16px; }
     #livePage .eyebrow{ color:#9bcaf0; font-size:.84rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
     #livePage h1,#livePage h2,#livePage h3,#livePage p{ margin:0; }
@@ -422,6 +422,10 @@
     #livePage .liveToolbar{ justify-content:space-between; }
     #livePage .chipBtn{ padding:10px 12px; font-size:.92rem; }
     #livePage .chipBtn.active{ background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.15); }
+    #livePage .subToolbar{ display:flex; gap:10px; overflow-x:auto; padding:4px 2px 2px; scrollbar-width:none; }
+    #livePage .subToolbar::-webkit-scrollbar{ display:none; }
+    #livePage .subToolbar .chipBtn{ flex:0 0 auto; white-space:nowrap; max-width:88px; overflow:hidden; text-overflow:ellipsis; padding:8px 10px; font-size:.8rem; border-radius:999px; }
+    #livePage .subToolbar .chipBtn.active{ background:rgba(105,179,231,.16); border-color:rgba(105,179,231,.48); box-shadow:0 0 0 1px rgba(105,179,231,.18) inset; }
     #livePage .livePanel{ display:none; }
     #livePage .livePanel.active{ display:block; }
     #livePage .scheduleGrid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
@@ -431,6 +435,12 @@
       border-radius:22px; padding:16px; display:grid; gap:12px; min-height:170px;
     }
     #livePage .gameTop{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+#livePage .gameTeams{ line-height:1.05; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; word-break:break-word; max-width:100%; }
+#livePage .toolbarLeft{ display:flex; flex-wrap:wrap; gap:8px; }
+#livePage #dayFilters .chipBtn{ max-width:110px; padding:8px 10px; font-size:.8rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    #livePage .gameTeams{max-width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.15;}
+    #livePage .probName{max-width:78px;display:inline-block;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;white-space:nowrap;}
+
     #livePage .gameTeams{ font-size:1.85rem; line-height:1; letter-spacing:-.04em; font-weight:1000; }
     #livePage .statusPill{
       padding:10px 14px; border-radius:999px; font-weight:1000;
@@ -510,6 +520,10 @@
     .tabBtn,.chipBtn,.pillBtn{padding:10px 14px;border-radius:999px}.tabBtn.active,.chipBtn.active,.pillBtn.active,.divisionPill.active{background:rgba(105,179,231,.18);border-color:rgba(105,179,231,.5);box-shadow:0 0 0 1px rgba(105,179,231,.18) inset}
     .divisionFilters{margin-top:16px}.livePanel{display:none}.livePanel.active{display:block}
     .scheduleGrid,.teamsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+    .filterSummary{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 14px;padding:10px 12px;border:1px solid rgba(107,168,232,.18);border-radius:14px;background:rgba(12,24,52,.72);color:#c6d4f5;font-size:.92rem}
+    .filterSummary strong{color:#f2f6ff;font-weight:800}
+    .filterPill{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:rgba(86,138,195,.16);border:1px solid rgba(107,168,232,.22);font-size:.78rem;font-weight:800;color:#d9e7ff}
+
     .gameCard,.teamCard,.adminCard{padding:16px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--line)}
     .gameTop,.teamTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.gameTeams,.teamName{font-weight:900;font-size:1.06rem;line-height:1.25}.teamSeed{color:var(--accent);font-weight:900}
     .statusPill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:.8rem;font-weight:900;white-space:nowrap}
@@ -533,6 +547,81 @@
     .inlineSplit{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
     @media (max-width: 980px){.livePageGrid,.adminGrid{grid-template-columns:1fr}.sidebar{position:static}.liveHeader{padding:16px}.content{padding:18px}}
 
+
+    #livePage .probLine{
+      margin-top:8px;
+      padding-top:8px;
+      border-top:1px solid rgba(255,255,255,.06);
+      color:#b9d8f1;
+      font-size:.9rem;
+      font-weight:800;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .probBadge{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(113,181,255,.24);
+      background:rgba(113,181,255,.12);
+      color:#e4efff;
+      font-size:.95rem;
+      font-weight:800;
+      line-height:1.35;
+    }
+
+    .probBlock{margin-top:10px;padding:12px;border-radius:14px;border:1px solid rgba(113,181,255,.18);background:rgba(113,181,255,.08)}
+    .probHeader{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.9rem;font-weight:900;color:#eaf3ff}
+    .probHeader span{display:flex;gap:6px;align-items:center}
+    .probName{max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:bottom}
+    .probBar{margin-top:9px;height:10px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.07);display:flex;border:1px solid rgba(255,255,255,.08)}
+    .probBarA{background:linear-gradient(90deg, rgba(105,179,231,.95), rgba(105,179,231,.7));min-width:0}
+    .probBarB{background:linear-gradient(90deg, rgba(255,199,44,.92), rgba(255,199,44,.72));min-width:0}
+    .probBasis{margin-top:8px;color:#b9d8f1;font-size:.8rem;line-height:1.35}
+    .editorGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .editorGrid .full{grid-column:1/-1}
+    .miniEditorActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .tinyNote{font-size:.8rem;color:var(--muted);line-height:1.35}
+    #livePage .probLine b{ color:#fff; }
+    #livePage .adminLocked,.adminUnlocked{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    #livePage .adminLockGrid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:16px;
+    }
+    #livePage .adminManageRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    #livePage .adminManageRow select,
+    #livePage .adminManageRow input{
+      min-width:260px;
+      flex:1;
+    }
+    #livePage .dangerBtn{
+      border:1px solid rgba(255,77,77,.4);
+      background:rgba(255,77,77,.12);
+      color:#ffd1d1;
+      border-radius:14px;
+      padding:11px 14px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    #livePage .dangerBtn:hover{
+      border-color:rgba(255,77,77,.7);
+      background:rgba(255,77,77,.18);
+    }
+    @media (max-width: 900px){
+      #livePage .adminLockGrid{ grid-template-columns:1fr; }
+    }
   </style>
 </head>
 
@@ -784,6 +873,8 @@
           <button class="chipBtn" id="liveOnlyBtn" type="button">Live Only</button>
         </div>
       </div>
+      <div class="subToolbar" id="subDivisionFilters"></div>
+      <div class="filterSummary" id="activeFilterSummary"></div>
 
       <section id="schedulePanel" class="livePanel active">
         <div class="scheduleGrid" id="scheduleGrid"></div>
@@ -800,39 +891,99 @@
       </section>
 
       <section id="adminPanel" class="livePanel">
-        <div class="adminGrid">
-          <div class="adminCard importPanel">
-            <div class="blockTitle">Import tournament data</div>
-            <label for="adminDivisionSelect">Division for imported tournament</label>
-            <select id="adminDivisionSelect"></select>
+        <div class="adminLocked" id="adminLocked">
+          <div class="adminCard">
+            <div class="blockTitle">Admin access required</div>
+            <div class="small">Enter the admin password to import sheets, change featured events, and delete tournaments.</div>
+            <div class="adminManageRow" style="margin-top:12px;">
+              <input type="password" id="adminPasswordInput" placeholder="Enter admin password" />
+              <button class="primaryBtn" id="unlockAdminBtn" type="button">Unlock Admin</button>
+            </div>
+            <div class="small" id="adminLockStatus">Admin is locked.</div>
+          </div>
+        </div>
 
-            <label for="sheetFileInput" style="margin-top:12px;">Upload CSV or TSV</label>
-            <input type="file" id="sheetFileInput" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values" />
+        <div class="adminUnlocked" id="adminUnlocked" style="display:none;">
+          <div class="adminGrid adminLockGrid">
+            <div class="adminCard importPanel">
+              <div class="blockTitle">Import tournament data</div>
+              <label for="adminDivisionSelect">Division for imported tournament</label>
+              <select id="adminDivisionSelect"></select>
 
-            <label for="sheetPasteInput" style="margin-top:12px;">Or paste copied cells from Google Sheets</label>
-            <textarea id="sheetPasteInput" placeholder="Paste rows here from Google Sheets. Column headers are supported."></textarea>
+              <label for="sheetUrlInput" style="margin-top:12px;">Paste Google Sheets link</label>
+              <div class="adminManageRow">
+                <input type="text" id="sheetUrlInput" placeholder="Paste a Google Sheets tab link or CSV export link" />
+                <button class="primaryBtn" id="importUrlBtn" type="button">Import From Link</button>
+              </div>
 
-            <div class="importActions" style="margin-top:12px;">
-              <button class="primaryBtn" id="importSheetBtn" type="button">Import Sheet Data</button>
-              <button class="ghostBtn" id="sampleSheetBtn" type="button">Load Sample Sheet</button>
-              <button class="ghostBtn" id="clearImportedBtn" type="button">Clear Imported Events</button>
+              <label for="sheetFileInput" style="margin-top:12px;">Upload CSV or TSV</label>
+              <input type="file" id="sheetFileInput" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values" />
+
+              <label for="sheetPasteInput" style="margin-top:12px;">Or paste copied cells from Google Sheets</label>
+              <textarea id="sheetPasteInput" placeholder="Paste rows here from Google Sheets. Column headers are supported."></textarea>
+
+              <div class="importActions" style="margin-top:12px;">
+                <button class="primaryBtn" id="importSheetBtn" type="button">Import Sheet Data</button>
+                <button class="ghostBtn" id="sampleSheetBtn" type="button">Load Sample Sheet</button>
+                <button class="ghostBtn" id="clearImportedBtn" type="button">Clear Imported Events</button>
+              </div>
+            </div>
+
+            <div class="adminCard">
+              <div class="blockTitle">Manage tournaments</div>
+              <label for="deleteTournamentSelect">Delete imported tournament</label>
+              <div class="adminManageRow" style="margin-top:12px;">
+                <select id="deleteTournamentSelect"></select>
+                <button class="dangerBtn" id="deleteTournamentBtn" type="button">Delete Tournament</button>
+              </div>
+              <div class="small" style="margin-top:10px;">Only imported tournaments can be deleted here. Built-in demo events stay available.</div>
+              <div class="small" id="adminManageStatus" style="margin-top:12px;">No admin changes yet.</div>
             </div>
           </div>
 
-          <div class="adminCard">
-            <div class="blockTitle">Supported columns</div>
-            <div class="hintList">
-              <div class="hintItem"><span class="codeHint">division</span> <span class="codeHint">tournament</span> <span class="codeHint">dates</span> <span class="codeHint">location</span></div>
-              <div class="hintItem"><span class="codeHint">day</span> <span class="codeHint">time</span> <span class="codeHint">pool</span> <span class="codeHint">status</span> <span class="codeHint">round</span></div>
-              <div class="hintItem"><span class="codeHint">teamA</span> <span class="codeHint">teamB</span> <span class="codeHint">scoreA</span> <span class="codeHint">scoreB</span></div>
-              <div class="hintItem"><span class="codeHint">seedA</span> <span class="codeHint">seedB</span> <span class="codeHint">rosterA</span> <span class="codeHint">rosterB</span></div>
+          <div class="adminGrid" style="margin-top:16px;">
+            <div class="adminCard">
+              <div class="blockTitle">Quick edit games</div>
+              <div class="tinyNote">Pick a game from the currently selected tournament, edit it fast, and save. Great for updating scores as games move from live to final.</div>
+              <label for="adminGameSelect" style="margin-top:12px;">Game</label>
+              <select id="adminGameSelect"></select>
+              <div class="editorGrid" style="margin-top:12px;">
+                <div><label for="editTeamA">Team A</label><input id="editTeamA" type="text" placeholder="Team A" /></div>
+                <div><label for="editTeamB">Team B</label><input id="editTeamB" type="text" placeholder="Team B" /></div>
+                <div><label for="editScoreA">Score A</label><input id="editScoreA" type="number" placeholder="0" /></div>
+                <div><label for="editScoreB">Score B</label><input id="editScoreB" type="number" placeholder="0" /></div>
+                <div><label for="editStatus">Status</label><select id="editStatus"><option>Next</option><option>Live</option><option>Final</option><option>Scheduled</option></select></div>
+                <div><label for="editPeriod">Period</label><input id="editPeriod" type="text" placeholder="2nd Quarter / Final / Warmup" /></div>
+                <div><label for="editRound">Round</label><input id="editRound" type="text" placeholder="Semifinal / Placement" /></div>
+                <div><label for="editDay">Day</label><input id="editDay" type="text" placeholder="Saturday" /></div>
+                <div><label for="editTime">Time</label><input id="editTime" type="text" placeholder="Sat 4:00 PM" /></div>
+                <div><label for="editPool">Pool</label><input id="editPool" type="text" placeholder="Pool A" /></div>
+                <div class="full"><label for="editNotes">Notes</label><input id="editNotes" type="text" placeholder="Optional notes" /></div>
+              </div>
+              <div class="miniEditorActions">
+                <button class="ghostBtn" id="loadGameEditorBtn" type="button">Load Selected Game</button>
+                <button class="primaryBtn" id="saveGameEditorBtn" type="button">Save Game Changes</button>
+              </div>
+              <div class="small" id="gameEditStatus" style="margin-top:10px;">No game loaded yet.</div>
             </div>
-            <div class="callout" style="margin-top:14px;">Roster cells can look like <span class="codeHint">1 John Doe|2 Max Irving|3 Lucas Ramirez</span>. Separate players with pipes, commas, semicolons, or new lines.</div>
-            <div class="block" style="margin-top:14px;">
-              <div class="blockTitle">What gets built automatically</div>
-              <div class="small">Finley Live will create the tournament, assign it to the selected division, generate the schedule cards, build team rosters, and group bracket rounds from your sheet rows.</div>
+          </div>
+
+          <div class="adminGrid">
+            <div class="adminCard">
+              <div class="blockTitle">Supported columns</div>
+              <div class="hintList">
+                <div class="hintItem"><span class="codeHint">division</span> <span class="codeHint">tournament</span> <span class="codeHint">dates</span> <span class="codeHint">location</span></div>
+                <div class="hintItem"><span class="codeHint">day</span> <span class="codeHint">time</span> <span class="codeHint">pool</span> <span class="codeHint">status</span> <span class="codeHint">round</span></div>
+                <div class="hintItem"><span class="codeHint">teamA</span> <span class="codeHint">teamB</span> <span class="codeHint">scoreA</span> <span class="codeHint">scoreB</span></div>
+                <div class="hintItem"><span class="codeHint">seedA</span> <span class="codeHint">seedB</span> <span class="codeHint">rosterA</span> <span class="codeHint">rosterB</span></div>
+              </div>
+              <div class="callout" style="margin-top:14px;">Roster cells can look like <span class="codeHint">1 John Doe|2 Max Irving|3 Lucas Ramirez</span>. Separate players with pipes, commas, semicolons, or new lines.</div>
+              <div class="block" style="margin-top:14px;">
+                <div class="blockTitle">What gets built automatically</div>
+                <div class="small">Finley Live creates the tournament, assigns the selected division, builds schedule cards, groups bracket rounds, and adds a simple win-probability model based on previous final scores in that division.</div>
+              </div>
+              <div class="small" id="importStatus" style="margin-top:12px;">No import yet.</div>
             </div>
-            <div class="small" id="importStatus" style="margin-top:12px;">No import yet.</div>
           </div>
         </div>
       </section>
@@ -856,6 +1007,8 @@
 <script>
 const LIVE_STORAGE_KEY = 'finleyLiveImportedV2';
 const LIVE_FEATURED_KEY = 'finleyLiveFeaturedV2';
+const LIVE_ADMIN_UNLOCK_KEY = 'finleyLiveAdminUnlockedV1';
+const LIVE_ADMIN_PASSWORD = '277353';
 const DIVISIONS = ['All','10U','12U','14U','16U','18U','NCAA'];
 const defaultLiveTournaments = [
   {id:'bronx-spring-open',division:'NCAA',name:'Bronx Spring Open',dates:'April 12–13',location:'Bronx, NY',featured:true,games:[{id:'g1',day:'Saturday',matchup:'LIU vs Fordham',teamA:'LIU',teamB:'Fordham',scoreA:12,scoreB:9,time:'Sat 9:00 AM',pool:'Pool A',status:'Final',round:'Semifinals',period:'Final'},{id:'g2',day:'Saturday',matchup:'Brown vs Iona',teamA:'Brown',teamB:'Iona',scoreA:11,scoreB:10,time:'Sat 10:15 AM',pool:'Pool A',status:'Final',round:'Semifinals',period:'Final'},{id:'g3',day:'Saturday',matchup:'LIU vs Brown',teamA:'LIU',teamB:'Brown',scoreA:8,scoreB:7,time:'Sat 4:00 PM',pool:'Pool A',status:'Live',round:'Final',period:'2nd Quarter'},{id:'g4',day:'Sunday',matchup:'Fordham vs Iona',teamA:'Fordham',teamB:'Iona',scoreA:null,scoreB:null,time:'Sun 9:30 AM',pool:'Pool A',status:'Next',round:'3rd Place',period:'Warmup'}],teams:[{name:'LIU',seed:'#1',roster:[['1','N. Goalie'],['2','M. Irving'],['3','D. Rothenberg'],['4','L. Ramirez'],['5','A. Smith'],['6','J. Perez']]},{name:'Brown',seed:'#2',roster:[['1','J. Carter'],['2','E. Miles'],['3','P. Jones'],['4','T. Riley'],['5','N. Hall'],['6','C. West']]},{name:'Fordham',seed:'#3',roster:[['1','L. Shea'],['2','D. Kerr'],['3','M. Vega'],['4','T. Walsh'],['5','R. Diaz'],['6','C. Mooney']]},{name:'Iona',seed:'#4',roster:[['1','A. Park'],['2','S. Lee'],['3','M. Grant'],['4','J. Fox'],['5','R. Allen'],['6','P. Hunt']]}]},
@@ -863,35 +1016,434 @@ const defaultLiveTournaments = [
   {id:'gold-coast-14u',division:'14U',name:'Gold Coast 14U Invite',dates:'June 21–22',location:'Irvine, CA',featured:false,games:[{id:'u14-1',day:'Saturday',matchup:'SOCAL vs Vanguard',teamA:'SOCAL',teamB:'Vanguard',scoreA:9,scoreB:8,time:'Sat 10:00 AM',pool:'North',status:'Final',round:'Quarterfinal',period:'Final'},{id:'u14-2',day:'Saturday',matchup:'Set vs Pride',teamA:'Set',teamB:'Pride',scoreA:7,scoreB:6,time:'Sat 11:20 AM',pool:'North',status:'Final',round:'Quarterfinal',period:'Final'},{id:'u14-3',day:'Sunday',matchup:'SOCAL vs Set',teamA:'SOCAL',teamB:'Set',scoreA:5,scoreB:4,time:'Sun 12:00 PM',pool:'Champ',status:'Live',round:'Final',period:'3rd Quarter'}],teams:[{name:'SOCAL',seed:'#1',roster:[['1','Goalie'],['2','Driver'],['3','Point'],['4','Flat'],['5','Wing']]},{name:'Vanguard',seed:'#2',roster:[['1','Hart'],['2','Cole'],['3','Jax'],['4','Finn'],['5','Zane']]},{name:'Set',seed:'#3',roster:[['1','Moss'],['2','Lane'],['3','Ari'],['4','Cade'],['5','Rex']]},{name:'Pride',seed:'#4',roster:[['1','Kai'],['2','Emi'],['3','Taj'],['4','Rae'],['5','Lux']]}]},
   {id:'east-18u-champs',division:'18U',name:'East Coast 18U Championships',dates:'July 12–13',location:'Princeton, NJ',featured:false,games:[{id:'u18-1',day:'Saturday',matchup:'Greenwich vs Naval',teamA:'Greenwich',teamB:'Naval',scoreA:null,scoreB:null,time:'Sat 2:00 PM',pool:'East',status:'Next',round:'Semifinal',period:'Warmup'},{id:'u18-2',day:'Saturday',matchup:'SHAQ vs Pride',teamA:'SHAQ',teamB:'Pride',scoreA:null,scoreB:null,time:'Sat 3:15 PM',pool:'East',status:'Next',round:'Semifinal',period:'Warmup'}],teams:[{name:'Greenwich',seed:'#1',roster:[['1','G1'],['2','G2'],['3','G3']]},{name:'Naval',seed:'#2',roster:[['1','N1'],['2','N2'],['3','N3']]},{name:'SHAQ',seed:'#3',roster:[['1','S1'],['2','S2'],['3','S3']]},{name:'Pride',seed:'#4',roster:[['1','P1'],['2','P2'],['3','P3']]}]}
 ];
-const liveEls = {}; let liveTournaments = []; let currentTournament = null; let currentDivision = 'All'; let selectedDay = 'All'; let liveOnly = false; let lastRefreshStamp = new Date();
+const liveEls = {}; let liveTournaments = []; let currentTournament = null; let currentDivision = 'All'; let selectedDay = 'All'; let currentSubDivision = 'All'; let liveOnly = false; let lastRefreshStamp = new Date(); let editingGameId = '';
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));}
 function slugify(value){return String(value||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'event';}
 function uidLive(){return Math.random().toString(36).slice(2,10);} function clone(obj){return JSON.parse(JSON.stringify(obj));}
 function formatScore(a,b){return Number.isFinite(a)&&Number.isFinite(b)?`${a}–${b}`:'—';}
+function isPlaceholderTeamName(name){
+  const value=String(name||'').trim();
+  return /^(?:winner|loser|win|lose|los)\b/i.test(value) || /^\d+(?:st|nd|rd|th)\s+(?:in|on)\s+/i.test(value) || /^[A-Z]\d+\b/i.test(value) || /^seed\s*\d+/i.test(value) || /^team\s*\d+/i.test(value);
+}
+function normalizeAliasKey(value){
+  return String(value||'').toUpperCase().replace(/\s+/g,' ').replace(/\s*[-–—]\s*$/,'').trim();
+}
+function uniqueNames(list){
+  return Array.from(new Set((list||[]).map(v=>String(v||'').trim()).filter(Boolean)));
+}
+function getGameCodeNumber(code){
+  const matches=String(code||'').match(/(\d{2,})/g);
+  return matches && matches.length ? matches[matches.length-1] : '';
+}
+function compactPlaceholderLabel(value){
+  let raw=String(value||'').replace(/\s+/g,' ').trim();
+  if(!raw) return raw;
+  raw=raw.replace(/^1ST\/2ND\s+IN\s+([A-Z])(?:\s*[•\-–—]\s*DIVISION\s*([0-9\/]+))?$/i,'Top 2 $1');
+  raw=raw.replace(/^3RD\/4TH\s+IN\s+([A-Z])(?:\s*[•\-–—]\s*DIVISION\s*([0-9\/]+))?$/i,'3/4 $1');
+  raw=raw.replace(/^([1-4](?:ST|ND|RD|TH))\s+(?:IN|ON)\s+([A-Z])(?:\s*[•\-–—]\s*DIVISION\s*([0-9\/]+))?$/i,(m,seed,pool)=>`${seed.toUpperCase()} ${pool.toUpperCase()}`);
+  raw=raw.replace(/^WIN\s+GM\s*#?\s*(\d{2,})$/i,'W Gm $1');
+  raw=raw.replace(/^LOS(?:ER|E|)\s+GM\s*#?\s*(\d{2,})$/i,'L Gm $1');
+  raw=raw.replace(/\s*[•\-–—]\s*DIVISION\s*[0-9\/]+$/i,'');
+  return raw;
+}
+function canonicalDayKey(value){
+  const raw=String(value||'').replace(/\s+/g,' ').trim();
+  if(!raw) return 'all';
+  const lower=raw.toLowerCase();
+  const dayMap={sunday:'sun', monday:'mon', tuesday:'tue', wednesday:'wed', thursday:'thu', friday:'fri', saturday:'sat'};
+  let day='';
+  for (const [full,short] of Object.entries(dayMap)) { if(lower.includes(full)){ day=short; break; } }
+  const monthMatch=raw.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s*(\d{1,2})/i);
+  if(day && monthMatch) return `${day}-${monthMatch[1].slice(0,3).toLowerCase()}-${monthMatch[2]}`;
+  if(monthMatch) return `${monthMatch[1].slice(0,3).toLowerCase()}-${monthMatch[2]}`;
+  const slashDate=raw.match(/(\d{1,2})\/(\d{1,2})(?:\/\d{2,4})?/);
+  if(day && slashDate) return `${day}-${slashDate[1]}-${slashDate[2]}`;
+  const dm=lower.match(/day\s*(\d+)/i);
+  if(dm) return `day${dm[1]}`;
+  if(day) return day;
+  return lower;
+}
+function displayDayLabel(value){
+  const raw=String(value||'').replace(/\s+/g,' ').trim();
+  if(!raw) return 'All';
+  const lower=raw.toLowerCase();
+  const dayMap={sunday:'Sun', monday:'Mon', tuesday:'Tue', wednesday:'Wed', thursday:'Thu', friday:'Fri', saturday:'Sat'};
+  let day='';
+  for (const [full,short] of Object.entries(dayMap)) { if(lower.includes(full)){ day=short; break; } }
+  const monthMatch=raw.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s*(\d{1,2})/i);
+  if(day && monthMatch) return `${day} ${monthMatch[1].slice(0,3)} ${monthMatch[2]}`;
+  if(monthMatch) return `${monthMatch[1].slice(0,3)} ${monthMatch[2]}`;
+  const slashDate=raw.match(/(\d{1,2})\/(\d{1,2})(?:\/\d{2,4})?/);
+  if(day && slashDate) return `${day} ${slashDate[1]}/${slashDate[2]}`;
+  const dm=raw.match(/Day\s*(\d+)/i);
+  if(dm) return `Day ${dm[1]}`;
+  if(day) return day;
+  return raw.length>18 ? raw.slice(0,18).trim()+'…' : raw;
+}
+function cleanImportedTeamName(name){
+  let value=String(name||'').replace(/\s+/g,' ').replace(/\s*[-–—]\s*$/,'').trim();
+  const seeded=value.match(/^((?:[A-Z]\d+)|(?:\d+(?:st|nd|rd|th)\s+(?:in|on)\s+[A-Z]))\s*[-–—]\s*(.+)$/i);
+  if(seeded && seeded[2].trim()) return seeded[2].trim();
+  const generic=value.match(/^([A-Z]\d+)\s*[-–—]\s*(.+)$/i);
+  if(generic && generic[2].trim()) return generic[2].trim();
+  return value;
+}
+function shortenTeamName(name){
+  let value=cleanImportedTeamName(name);
+  if(!value) return value;
+  const swaps=[
+    [/\bWater Polo Club\b/gi,'WPC'],[/\bWater Polo\b/gi,'WP'],[/\bClub\b/gi,''],[/\bAcademy\b/gi,'Acad'],[/\bUnited\b/gi,'Utd'],[/\bJunior Olympics\b/gi,'JO'],[/\bBoys\b/gi,''],[/\bGirls\b/gi,''],[/\bBeach\b/gi,'Bch'],[/\bValley\b/gi,'Vly'],[/\bChristian\b/gi,'Chr'],[/\bPreparatory\b/gi,'Prep'],[/\bHigh School\b/gi,'HS'],[/\bSchool\b/gi,'Sch'],[/\bSouthern California\b/gi,'SoCal'],[/\bLos Angeles\b/gi,'LA'],[/\bLa Jolla\b/gi,'LJ'],[/\bNewport Beach\b/gi,'Newport'],[/\bSan Diego\b/gi,'SD'],[/\bSan Clemente\b/gi,'San Clem.'],[/\bSanta Barbara\b/gi,'SB'],[/\bFoothill\b/gi,'Foot.'],[/\bPolytechnic\b/gi,'Poly'],[/\band\b/gi,'&']
+  ];
+  swaps.forEach(([a,b])=>{ value=value.replace(a,b); });
+  value=value.replace(/\s+/g,' ').replace(/\s*\/\s*/g,' / ').trim();
+  if(value.length<=22) return value;
+  const words=value.split(' ');
+  if(words.length>=3){
+    const reduced=words.map((w,i)=> i===0 || i===words.length-1 || /^[A-Z0-9&./-]+$/.test(w) ? w : `${w[0]}.`).join(' ').replace(/\s+/g,' ').trim();
+    if(reduced.length<value.length) value=reduced;
+  }
+  if(value.length>24) value=value.slice(0,22).trim().replace(/[\s/.-]+$/,'') + '…';
+  return value;
+}
+function shortenPossibleDisplay(label){
+  const parts=String(label||'').split('/').map(s=>shortenTeamName(compactPlaceholderLabel(s.trim()))).filter(Boolean).slice(0,2).map(s=>s.length>9 ? s.slice(0,8).trim().replace(/[\s/.-]+$/,'')+'…' : s);
+  return parts.join(' / ');
+}
+function getGameSubDivision(game){
+  const source=[game?.subDivision, game?.notes, game?.round, game?.pool, game?.period, game?.rawDivisionLabel].filter(Boolean).join(' • ');
+  const m=String(source).match(/(?:Division|Div\.?|Flight)\s*([0-9]+(?:\/[0-9]+)*)/i);
+  if(m) return `Division ${m[1]}`;
+  return '';
+}
+function getGameSubDivisionKeys(game){
+  const raw=getGameSubDivision(game);
+  const m=raw.match(/([0-9]+(?:\/[0-9]+)*)/);
+  if(!m) return [];
+  return uniqueNames(m[1].split('/').map(n=>`D${n}`));
+}
+function getSubDivisionOptions(tournament){
+  return ['All', ...uniqueNames((tournament?.games||[]).flatMap(getGameSubDivisionKeys).filter(Boolean))];
+}
+function formatSubDivisionLabel(label){
+  const value=String(label||'').trim();
+  if(!value || value==='All') return 'All';
+  const m=value.match(/D\s*([0-9]+)/i);
+  if(m) return `D${m[1]}`;
+  return value.replace(/Division/gi,'D').replace(/\s+/g,'').trim();
+}
+function buildAliasMapFromMatrix(matrix){
+  const aliasMap=new Map();
+  const addAlias=(alias, team)=>{
+    const key=normalizeAliasKey(alias);
+    const clean=cleanImportedTeamName(team);
+    if(!key || !clean || isPlaceholderTeamName(clean)) return;
+    aliasMap.set(key, clean);
+  };
+  (matrix||[]).forEach(row=>{
+    (row||[]).forEach(cell=>{
+      const value=String(cell||'').replace(/\s+/g,' ').trim();
+      if(!value) return;
+      let m=value.match(/^([A-Z]\d+)\s*[-–—]\s*(.+?)(?:\s*[-–—]\s*\d+(?:\.\d+)?\s*pts?\.?\s*)?$/i);
+      if(m){ addAlias(m[1], m[2]); return; }
+      m=value.match(/^(\d+(?:st|nd|rd|th)\s+(?:in|on)\s+[A-Z])\s*[-–—]\s*(.+?)(?:\s*[-–—]\s*\d+(?:\.\d+)?\s*pts?\.?\s*)?$/i);
+      if(m){ addAlias(m[1], m[2]); return; }
+    });
+  });
+  return Object.fromEntries(aliasMap.entries());
+}
+function resolvePossibleTeamNames(name, tournament, seen=new Set()){
+  const raw=String(name||'').replace(/\s+/g,' ').trim();
+  const clean=cleanImportedTeamName(raw);
+  if(!raw && !clean) return [];
+  const aliasMap=tournament?.aliasMap||{};
+  const direct=aliasMap[normalizeAliasKey(raw)] || aliasMap[normalizeAliasKey(clean)];
+  if(direct) return [direct];
+  if(!isPlaceholderTeamName(raw) && !isPlaceholderTeamName(clean)) return [clean||raw];
+  const marker=normalizeAliasKey(raw||clean);
+  if(seen.has(marker)) return [];
+  seen.add(marker);
+  const gm=(raw||clean).match(/\b(?:WIN|LOS|LOSE|LOSER|WINNER)\s*GM\s*#?\s*(\d{2,})/i);
+  if(gm && tournament?.games){
+    const ref=tournament.games.find(g=>getGameCodeNumber(g.gameCode)===gm[1]);
+    if(ref){
+      if(Number.isFinite(ref.scoreA) && Number.isFinite(ref.scoreB)){
+        const winner=Number(ref.scoreA)>=Number(ref.scoreB)? resolvePossibleTeamNames(ref.teamA, tournament, seen):resolvePossibleTeamNames(ref.teamB, tournament, seen);
+        const loser=Number(ref.scoreA)>=Number(ref.scoreB)? resolvePossibleTeamNames(ref.teamB, tournament, seen):resolvePossibleTeamNames(ref.teamA, tournament, seen);
+        return /^\s*(?:WIN|WINNER)/i.test(raw||clean) ? winner : loser;
+      }
+      return uniqueNames([...resolvePossibleTeamNames(ref.teamA, tournament, seen), ...resolvePossibleTeamNames(ref.teamB, tournament, seen)]);
+    }
+  }
+  const seeded=(raw||clean).match(/^(\d+(?:st|nd|rd|th)\s+(?:in|on)\s+[A-Z])\b/i);
+  if(seeded){
+    const val=aliasMap[normalizeAliasKey(seeded[1])];
+    if(val) return [val];
+  }
+  const slot=(raw||clean).match(/^([A-Z]\d+)\b/i);
+  if(slot){
+    const val=aliasMap[normalizeAliasKey(slot[1])];
+    if(val) return [val];
+  }
+  return [];
+}
+function formatPossibleTeamDisplay(names, fallbackNumber=1, rawName=''){
+  const list=uniqueNames(names).slice(0,2);
+  if(list.length) return list.join(' / ');
+  const cleaned=cleanImportedTeamName(rawName);
+  if(cleaned) return compactPlaceholderLabel(cleaned);
+  return `Side ${fallbackNumber}`;
+}
+function getDisplayTeamName(name,fallbackNumber=1){
+  return shortenPossibleDisplay(formatPossibleTeamDisplay(resolvePossibleTeamNames(name,currentTournament||{}), fallbackNumber, name));
+}
+function getOrderedPossibleNames(names, division){
+  const ratings=buildDivisionRatings(division||currentTournament?.division||'NCAA');
+  return uniqueNames(names).sort((a,b)=>getStrengthFromRating(getRatingForName(ratings,b))-getStrengthFromRating(getRatingForName(ratings,a)));
+}
+function enrichGameDisplay(game, tournament){
+  game.subDivision = game.subDivision || getGameSubDivision(game);
+  game.teamAPossibleNames=getOrderedPossibleNames(resolvePossibleTeamNames(game.teamA, tournament), tournament?.division);
+  game.teamBPossibleNames=getOrderedPossibleNames(resolvePossibleTeamNames(game.teamB, tournament), tournament?.division);
+  game.teamADisplay=shortenPossibleDisplay(formatPossibleTeamDisplay(game.teamAPossibleNames,1,game.teamA));
+  game.teamBDisplay=shortenPossibleDisplay(formatPossibleTeamDisplay(game.teamBPossibleNames,2,game.teamB));
+  game.matchupDisplay=`${game.teamADisplay} vs ${game.teamBDisplay}`;
+  return game;
+}
+
+function buildProbabilityBlock(game, prob){
+  const a=Math.max(0, Math.min(100, Number(prob.a)||50));
+  const b=Math.max(0, Math.min(100, Number(prob.b)||50));
+  return `<div class="probBlock"><div class="probHeader"><span title="${escapeHtml(prob.teamAFull||prob.teamA)}"><b class="probName">${escapeHtml(prob.teamA)}</b><span>${a}%</span></span><span title="${escapeHtml(prob.teamBFull||prob.teamB)}"><b class="probName">${escapeHtml(prob.teamB)}</b><span>${b}%</span></span></div><div class="probBar"><span class="probBarA" style="width:${a}%"></span><span class="probBarB" style="width:${b}%"></span></div><div class="probBasis">${escapeHtml(prob.basis)}</div></div>`;
+}
 function normalizeHeader(v){return String(v||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'');}
 function splitCsvLine(line){const out=[]; let cell='', quote=false; for(let i=0;i<line.length;i++){const c=line[i]; if(c==='"'){ if(quote&&line[i+1]==='"'){cell+='"'; i++;} else quote=!quote; } else if(c===','&&!quote){ out.push(cell); cell=''; } else cell+=c;} out.push(cell); return out;}
 function normalizeRosterCell(value){ if(!value) return []; return String(value).split(/\||\n|;|,/).map(x=>x.trim()).filter(Boolean).map((part,i)=>{ const m=part.match(/^(\d+)\s+(.+)$/); return m?[m[1],m[2].trim()]:[String(i+1),part]; }); }
 function dedupeTeams(teams){ const map=new Map(); teams.forEach(team=>{ if(!team||!team.name) return; const key=team.name.trim(); if(!map.has(key)) map.set(key,{name:key,seed:team.seed||'',roster:team.roster||[]}); else { const e=map.get(key); if(!e.seed&&team.seed) e.seed=team.seed; if((!e.roster||!e.roster.length)&&team.roster&&team.roster.length) e.roster=team.roster; } }); return Array.from(map.values()); }
-function deriveBracket(games){ const order=['Pool Play','Round Robin','Quarterfinal','Quarterfinals','Semifinal','Semifinals','Final','Championship','3rd Place','Placement']; const grouped=new Map(); games.forEach(game=>{ const round=game.round||game.period||'Games'; if(!grouped.has(round)) grouped.set(round,[]); grouped.get(round).push({a:game.teamA||game.matchup.split(' vs ')[0]||'TBD', b:game.teamB||game.matchup.split(' vs ')[1]||'TBD', sa:Number.isFinite(game.scoreA)?String(game.scoreA):'', sb:Number.isFinite(game.scoreB)?String(game.scoreB):'', meta:[game.day,game.time,game.pool].filter(Boolean).join(' • ')}); }); return Array.from(grouped.keys()).sort((a,b)=>{const ia=order.indexOf(a), ib=order.indexOf(b); if(ia===-1&&ib===-1) return a.localeCompare(b); if(ia===-1) return 1; if(ib===-1) return -1; return ia-ib;}).map(round=>({round,matches:grouped.get(round)})); }
-function recalcTournament(t){ t.days=Array.from(new Set((t.games||[]).map(g=>g.day).filter(Boolean))); t.teams=dedupeTeams(t.teams||[]); t.bracket=deriveBracket(t.games||[]); t.teamsCount=t.teams.length; t.gamesCount=(t.games||[]).length; t.liveCount=(t.games||[]).filter(g=>g.status==='Live').length; return t; }
+function deriveBracket(games){
+  const order=['Pool Play','Round Robin','Quarterfinal','Quarterfinals','Semifinal','Semifinals','Final','Championship','3rd Place','Placement'];
+  const grouped=new Map();
+  games.forEach(game=>{
+    const round=game.round||game.period||'Games';
+    if(!grouped.has(round)) grouped.set(round,[]);
+    grouped.get(round).push({
+      a:game.teamADisplay||formatPossibleTeamDisplay(game.teamAPossibleNames,1,game.teamA),
+      b:game.teamBDisplay||formatPossibleTeamDisplay(game.teamBPossibleNames,2,game.teamB),
+      sa:Number.isFinite(game.scoreA)?String(game.scoreA):'',
+      sb:Number.isFinite(game.scoreB)?String(game.scoreB):'',
+      meta:[game.day,game.time,game.pool].filter(Boolean).join(' • ')
+    });
+  });
+  return Array.from(grouped.keys()).sort((a,b)=>{
+    const ia=order.indexOf(a), ib=order.indexOf(b);
+    if(ia===-1&&ib===-1) return a.localeCompare(b);
+    if(ia===-1) return 1;
+    if(ib===-1) return -1;
+    return ia-ib;
+  }).map(round=>({round,matches:grouped.get(round)}));
+}
+function getDivisionHistoryGames(division){
+  return liveTournaments.flatMap(t=>(t.division===division ? (t.games||[]) : [])).filter(g=>g.status==='Final' && Number.isFinite(g.scoreA) && Number.isFinite(g.scoreB));
+}
+function buildDivisionRatings(division){
+  const finals=getDivisionHistoryGames(division);
+  const ratings=new Map();
+  const ensure=name=>{
+    const key=cleanImportedTeamName(name)||formatPossibleTeamDisplay([],1,name);
+    if(!ratings.has(key)) ratings.set(key,{team:key,games:0,wins:0,losses:0,ties:0,goalDiff:0});
+    return ratings.get(key);
+  };
+  finals.forEach(game=>{
+    const a=ensure(game.teamA), b=ensure(game.teamB);
+    const sa=Number(game.scoreA), sb=Number(game.scoreB);
+    a.games+=1; b.games+=1;
+    a.goalDiff+=(sa-sb); b.goalDiff+=(sb-sa);
+    if(sa>sb){ a.wins+=1; b.losses+=1; }
+    else if(sb>sa){ b.wins+=1; a.losses+=1; }
+    else { a.ties+=1; b.ties+=1; }
+  });
+  return ratings;
+}
+function getRatingForName(ratings, name){
+  return ratings.get(name)||{games:0,wins:0,losses:0,ties:0,goalDiff:0};
+}
+function getStrengthFromRating(r){
+  return (r.wins*3 - r.losses*1.5 + r.ties + r.goalDiff*0.18);
+}
+function getWinProbabilities(game,division){
+  const div=division||currentTournament?.division||'NCAA';
+  const ratings=buildDivisionRatings(div);
+  const teamAList=getOrderedPossibleNames((game.teamAPossibleNames&&game.teamAPossibleNames.length)?game.teamAPossibleNames:resolvePossibleTeamNames(game.teamA,currentTournament||{},new Set()), div);
+  const teamBList=getOrderedPossibleNames((game.teamBPossibleNames&&game.teamBPossibleNames.length)?game.teamBPossibleNames:resolvePossibleTeamNames(game.teamB,currentTournament||{},new Set()), div);
+  const fullA=formatPossibleTeamDisplay(teamAList,1,game.teamA);
+  const fullB=formatPossibleTeamDisplay(teamBList,2,game.teamB);
+  const labelA=shortenPossibleDisplay(fullA);
+  const labelB=shortenPossibleDisplay(fullB);
+  const listA=teamAList.length?teamAList:[fullA];
+  const listB=teamBList.length?teamBList:[fullB];
+  let total=0, count=0;
+  listA.forEach(aName=>{
+    listB.forEach(bName=>{
+      const a=getRatingForName(ratings,aName), b=getRatingForName(ratings,bName);
+      let delta=getStrengthFromRating(a)-getStrengthFromRating(b);
+      const h2h=getDivisionHistoryGames(div).filter(g=>{
+        const ga=cleanImportedTeamName(g.teamA), gb=cleanImportedTeamName(g.teamB);
+        return (ga===aName && gb===bName) || (ga===bName && gb===aName);
+      });
+      h2h.forEach(g=>{
+        const ga=cleanImportedTeamName(g.teamA);
+        const margin=ga===aName ? (Number(g.scoreA)-Number(g.scoreB)) : (Number(g.scoreB)-Number(g.scoreA));
+        delta += margin*0.55;
+      });
+      if(a.games===0 && b.games===0) delta=0;
+      total += 1/(1+Math.exp(-delta/4.5));
+      count += 1;
+    });
+  });
+  let pa=count?total/count:0.5;
+  let pb=1-pa;
+  let displayA=labelA, displayB=labelB, displayAFull=fullA, displayBFull=fullB;
+  if(pb>pa){
+    [pa,pb] = [pb,pa];
+    [displayA,displayB] = [labelB,labelA];
+    [displayAFull,displayBFull] = [fullB,fullA];
+  }
+  return {teamA:displayA, teamB:displayB, teamAFull:displayAFull, teamBFull:displayBFull, a:Math.round(pa*100), b:100-Math.round(pa*100), basis:count>1?`Estimated from prior final scores across possible matchups in ${div}`:`Based on prior final scores in ${div}`};
+}
+function recalcTournament(t){
+  t.games=(t.games||[]).map(game=>enrichGameDisplay(game,t));
+  t.days=Array.from(new Map((t.games||[]).map(g=>[canonicalDayKey(g.day), String(g.day||'').replace(/\s+/g,' ').trim()])).entries()).filter(([k,v])=>k!=='all'&&v).map(([,v])=>v);
+  t.teams=dedupeTeams((t.teams||[]).map(team=>({...team,name:cleanImportedTeamName(team.name)}))).filter(team=>team.name && !/^Side \d+$/.test(team.name));
+  t.bracket=deriveBracket(t.games||[]);
+  t.teamsCount=t.teams.length;
+  t.gamesCount=(t.games||[]).length;
+  t.liveCount=(t.games||[]).filter(g=>g.status==='Live').length;
+  return t;
+}
 function loadLiveTournaments(){ let imported=[]; try{imported=JSON.parse(localStorage.getItem(LIVE_STORAGE_KEY)||'[]');}catch{} const featuredId=localStorage.getItem(LIVE_FEATURED_KEY)||''; liveTournaments=[...clone(defaultLiveTournaments),...clone(imported)].map(recalcTournament); if(featuredId) liveTournaments.forEach(t=>t.featured=t.id===featuredId); if(!liveTournaments.some(t=>t.featured)&&liveTournaments[0]) liveTournaments[0].featured=true; }
 function persistImportedTournaments(){ const imported=liveTournaments.filter(t=>!defaultLiveTournaments.some(d=>d.id===t.id)); localStorage.setItem(LIVE_STORAGE_KEY, JSON.stringify(imported)); const featured=liveTournaments.find(t=>t.featured); if(featured) localStorage.setItem(LIVE_FEATURED_KEY, featured.id); }
 function getVisibleTournaments(){ return liveTournaments.filter(t=>currentDivision==='All'||t.division===currentDivision); }
 function ensureCurrentTournament(){ const visible=getVisibleTournaments(); if(!visible.length){ currentTournament=null; return; } currentTournament=visible.find(t=>currentTournament&&t.id===currentTournament.id)||visible.find(t=>t.featured)||visible[0]; }
 function updateTimestamp(){ liveEls.liveTimestamp.textContent=`Last refresh: ${lastRefreshStamp.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}`; }
-function renderDivisionFilters(){ liveEls.divisionFilters.innerHTML=DIVISIONS.map(d=>`<button class="divisionPill ${d===currentDivision?'active':''}" data-division="${d}" type="button">${d}</button>`).join(''); liveEls.adminDivisionSelect.innerHTML=DIVISIONS.filter(d=>d!=='All').map(d=>`<option value="${d}">${d}</option>`).join(''); if(currentDivision!=='All') liveEls.adminDivisionSelect.value=currentDivision; liveEls.divisionFilters.querySelectorAll('[data-division]').forEach(btn=>btn.addEventListener('click', ()=>{ currentDivision=btn.dataset.division; renderTournamentOptions(); renderDivisionFilters(); renderCurrentTournament(); })); }
+function renderDivisionFilters(){ liveEls.divisionFilters.innerHTML=DIVISIONS.map(d=>`<button class="divisionPill ${d===currentDivision?'active':''}" data-division="${d}" type="button">${d}</button>`).join(''); liveEls.adminDivisionSelect.innerHTML=DIVISIONS.filter(d=>d!=='All').map(d=>`<option value="${d}">${d}</option>`).join(''); if(currentDivision!=='All') liveEls.adminDivisionSelect.value=currentDivision; liveEls.divisionFilters.querySelectorAll('[data-division]').forEach(btn=>btn.addEventListener('click', ()=>{ currentDivision=btn.dataset.division; currentSubDivision='All'; renderTournamentOptions(); renderDivisionFilters(); renderCurrentTournament(); })); }
 function renderTournamentOptions(){ const visible=getVisibleTournaments(); liveEls.tournamentSelect.innerHTML=visible.map(t=>`<option value="${t.id}">${t.name} • ${t.division} • ${t.dates}</option>`).join(''); ensureCurrentTournament(); if(currentTournament) liveEls.tournamentSelect.value=currentTournament.id; }
-function renderDayFilters(){ if(!currentTournament){ liveEls.dayFilters.innerHTML=''; return; } const days=['All', ...(currentTournament.days||[])]; liveEls.dayFilters.innerHTML=days.map(day=>`<button class="chipBtn ${selectedDay===day?'active':''}" data-day="${day}" type="button">${day}</button>`).join(''); liveEls.dayFilters.querySelectorAll('[data-day]').forEach(btn=>btn.addEventListener('click', ()=>{ selectedDay=btn.dataset.day; renderDayFilters(); renderSchedule(); })); }
-function getFilteredGames(){ if(!currentTournament) return []; return currentTournament.games.filter(g=>(selectedDay==='All'||g.day===selectedDay)&&(!liveOnly||g.status==='Live')); }
-function setActivePanel(id){ document.querySelectorAll('#livePage .tabBtn[data-panel]').forEach(btn=>btn.classList.toggle('active',btn.dataset.panel===id)); document.querySelectorAll('#livePage .livePanel').forEach(panel=>panel.classList.toggle('active',panel.id===id)); }
+function renderDayFilters(){
+  if(!liveEls.dayFilters) return;
+  if(!currentTournament){ liveEls.dayFilters.innerHTML=''; return; }
+  const seen=new Set();
+  const days=['All', ...((currentTournament.days||[]).filter(day=>{ const key=canonicalDayKey(day); if(!day||seen.has(key)||key==='all') return false; seen.add(key); return true; }))];
+  liveEls.dayFilters.innerHTML=days.map(day=>{
+    const key=day==='All' ? 'All' : canonicalDayKey(day);
+    const label=day==='All' ? 'All' : displayDayLabel(day);
+    return `<button class="chipBtn ${selectedDay===key?'active':''}" data-day="${escapeHtml(key)}" title="${escapeHtml(String(day))}" type="button">${escapeHtml(label)}</button>`;
+  }).join('');
+  liveEls.dayFilters.querySelectorAll('[data-day]').forEach(btn=>btn.addEventListener('click', ()=>{ selectedDay=btn.dataset.day; renderDayFilters(); renderActiveFilterSummary(); renderSchedule(); renderBracket(); renderTeams(); }));
+}
+function renderSubDivisionFilters(){
+  if(!liveEls.subDivisionFilters) return;
+  if(!currentTournament){ liveEls.subDivisionFilters.innerHTML=''; currentSubDivision='All'; return; }
+  const options=getSubDivisionOptions(currentTournament);
+  if(!options.includes(currentSubDivision)) currentSubDivision='All';
+  if(selectedDay!=='All' && !(currentTournament.days||[]).some(day=>canonicalDayKey(day)===selectedDay)) selectedDay='All';
+  if(options.length<=1){
+    liveEls.subDivisionFilters.innerHTML='';
+    currentSubDivision='All';
+    return;
+  }
+  liveEls.subDivisionFilters.innerHTML=options.map(opt=>`<button class="chipBtn ${opt===currentSubDivision?'active':''}" data-subdivision="${escapeHtml(opt)}" title="${escapeHtml(opt)}" type="button">${escapeHtml(formatSubDivisionLabel(opt))}</button>`).join('');
+  liveEls.subDivisionFilters.querySelectorAll('[data-subdivision]').forEach(btn=>btn.addEventListener('click', ()=>{
+    currentSubDivision=btn.dataset.subdivision;
+    renderSubDivisionFilters();
+    renderSchedule();
+    renderBracket();
+    renderTeams();
+  }));
+}
+function getVisibleGamesBase(){ if(!currentTournament) return []; return currentTournament.games.filter(g=>(currentSubDivision==='All'||getGameSubDivisionKeys(g).includes(currentSubDivision))); }
+function getFilteredGames(){ return getVisibleGamesBase().filter(g=>(selectedDay==='All'||canonicalDayKey(g.day)===selectedDay)&&(!liveOnly||g.status==='Live')); }
+function setActivePanel(id){ document.querySelectorAll('#livePage .tabBtn[data-panel]').forEach(btn=>btn.classList.toggle('active',btn.dataset.panel===id)); document.querySelectorAll('#livePage .livePanel').forEach(panel=>panel.classList.toggle('active',panel.id===id)); if(id==='adminPanel') syncAdminVisibility(); }
 function showModal(title,eyebrow,html){ liveEls.modalTitle.textContent=title; liveEls.modalEyebrow.textContent=eyebrow; liveEls.modalBody.innerHTML=html; liveEls.liveModal.classList.add('show'); liveEls.liveModal.setAttribute('aria-hidden','false'); }
 function closeModal(){ liveEls.liveModal.classList.remove('show'); liveEls.liveModal.setAttribute('aria-hidden','true'); }
-function openGameDetail(id){ const game=currentTournament.games.find(g=>g.id===id); if(!game) return; showModal(game.matchup,'Game Detail',`<div class="detailGrid"><div class="detailTile"><div class="detailLabel">Score</div><div class="detailValue">${formatScore(game.scoreA,game.scoreB)}</div></div><div class="detailTile"><div class="detailLabel">Status</div><div class="detailValue">${game.status}</div></div><div class="detailTile"><div class="detailLabel">Round</div><div class="detailValue">${game.round||game.period||'Game'}</div></div><div class="detailTile"><div class="detailLabel">When / Where</div><div class="detailValue">${game.time} • ${game.pool}</div></div></div><div class="inlineSplit"><div class="detailTile"><div class="detailLabel">Team A</div><div class="detailValue">${game.teamA||'TBD'}</div></div><div class="detailTile"><div class="detailLabel">Team B</div><div class="detailValue">${game.teamB||'TBD'}</div></div></div><div class="modalActions" style="margin-top:14px;"><button class="primaryBtn" type="button" id="jumpTeamsBtn">Jump to Teams</button><button class="ghostBtn" type="button" id="jumpBracketBtn">Jump to Bracket</button></div>`); document.getElementById('jumpTeamsBtn').onclick=()=>{closeModal(); setActivePanel('teamsPanel');}; document.getElementById('jumpBracketBtn').onclick=()=>{closeModal(); setActivePanel('bracketPanel');}; }
-function openTeamList(){ showModal(`${currentTournament.name} Teams`,'Team Directory',`<div class="teamsGrid">${currentTournament.teams.map(team=>`<article class="teamCard"><div class="teamTop"><div class="teamName">${team.name}</div><div class="teamSeed">${team.seed||''}</div></div><div class="roster">${(team.roster||[]).map(player=>`<div class="player"><span>#${player[0]} ${player[1]}</span><span>Cap ${player[0]}</span></div>`).join('')}</div></article>`).join('')}</div>`); }
-function renderSchedule(){ const games=getFilteredGames(); if(!games.length){ liveEls.scheduleGrid.innerHTML='<div class="callout">No games match this filter right now. Try switching the day, division, or live-only toggle.</div>'; return; } liveEls.scheduleGrid.innerHTML=games.map(game=>{ const statusClass=game.status==='Live'?'live':(game.status==='Final'?'final':'next'); return `<article class="gameCard"><div class="gameTop"><div class="gameTeams">${game.matchup}</div><div class="statusPill ${statusClass}">${game.status}</div></div><div class="scoreLine">${formatScore(game.scoreA,game.scoreB)}</div><div class="meta">${game.period?game.period+'<br>':''}${game.time} • ${game.pool}<br>${game.round||game.day||''}</div><div class="cardActions"><button type="button" data-detail="${game.id}">Game Detail</button><button type="button" data-viewteams="${game.id}">View Teams</button></div></article>`; }).join(''); liveEls.scheduleGrid.querySelectorAll('[data-detail]').forEach(btn=>btn.addEventListener('click',()=>openGameDetail(btn.dataset.detail))); liveEls.scheduleGrid.querySelectorAll('[data-viewteams]').forEach(btn=>btn.addEventListener('click',()=>openTeamList())); }
-function renderBracket(){ if(!currentTournament){ liveEls.bracketGrid.innerHTML=''; return; } currentTournament.bracket=deriveBracket(currentTournament.games); liveEls.bracketGrid.innerHTML=currentTournament.bracket.map(round=>`<div class="round"><div class="roundTitle">${round.round}</div>${round.matches.map(match=>`<div class="match"><div class="matchRow"><span>${match.a}</span><span>${match.sa||'—'}</span></div><div class="matchRow"><span>${match.b}</span><span>${match.sb||'—'}</span></div><div class="matchMeta">${match.meta}</div></div>`).join('')}</div>`).join(''); }
-function renderTeams(){ if(!currentTournament){ liveEls.teamsGrid.innerHTML=''; return; } liveEls.teamsGrid.innerHTML=currentTournament.teams.map(team=>`<article class="teamCard"><div class="teamTop"><div class="teamName">${team.name}</div><div class="teamSeed">${team.seed||''}</div></div><div class="roster">${(team.roster||[]).map(player=>`<div class="player"><span>#${player[0]} ${player[1]}</span><span>Cap ${player[0]}</span></div>`).join('')}</div></article>`).join(''); }
+function openGameDetail(id){ const game=currentTournament.games.find(g=>g.id===id); if(!game) return; const prob=getWinProbabilities(game,currentTournament.division); showModal(game.matchupDisplay||game.matchup,'Game Detail',`<div class="detailGrid"><div class="detailTile"><div class="detailLabel">Score</div><div class="detailValue">${formatScore(game.scoreA,game.scoreB)}</div></div><div class="detailTile"><div class="detailLabel">Status</div><div class="detailValue">${game.status}</div></div><div class="detailTile"><div class="detailLabel">Round</div><div class="detailValue">${game.round||game.period||'Game'}</div></div><div class="detailTile"><div class="detailLabel">When / Where</div><div class="detailValue">${game.time} • ${game.pool}</div></div></div><div class="inlineSplit"><div class="detailTile"><div class="detailLabel">${game.teamADisplay||'Team A'}</div><div class="detailValue">${prob.a}% win chance</div></div><div class="detailTile"><div class="detailLabel">${game.teamBDisplay||'Team B'}</div><div class="detailValue">${prob.b}% win chance</div></div></div>${buildProbabilityBlock(game,prob)}<div class="modalActions" style="margin-top:14px;"><button class="primaryBtn" type="button" id="jumpTeamsBtn">Jump to Teams</button><button class="ghostBtn" type="button" id="jumpBracketBtn">Jump to Bracket</button>${adminUnlocked?`<button class="ghostBtn" type="button" id="quickEditGameBtn">Quick Edit</button>`:''}</div>`); document.getElementById('jumpTeamsBtn').onclick=()=>{closeModal(); setActivePanel('teamsPanel');}; document.getElementById('jumpBracketBtn').onclick=()=>{closeModal(); setActivePanel('bracketPanel');}; const quick=document.getElementById('quickEditGameBtn'); if(quick) quick.onclick=()=>{ closeModal(); setActivePanel('adminPanel'); loadGameIntoEditor(game.id); }; }
+function openTeamList(){ showModal(`${currentTournament.name} Teams`,'Team Directory',`<div class="teamsGrid">${currentTournament.teams.map(team=>`<article class="teamCard"><div class="teamTop"><div class="teamName">${getDisplayTeamName(team.name,1)}</div><div class="teamSeed">${team.seed||''}</div></div><div class="roster">${(team.roster||[]).map(player=>`<div class="player"><span>#${player[0]} ${player[1]}</span><span>Cap ${player[0]}</span></div>`).join('')}</div></article>`).join('')}</div>`); }
+function buildActiveFilterLabel(){
+  const dayLabel = selectedDay==='All' ? 'All days' : displayDayLabel(selectedDay);
+  const subLabel = currentSubDivision==='All' ? 'All groups' : formatSubDivisionLabel(currentSubDivision);
+  const divisionLabel = currentDivision==='All' ? (currentTournament?.division || 'All divisions') : currentDivision;
+  const liveLabel = liveOnly ? 'Live only' : 'All games';
+  return {dayLabel, subLabel, divisionLabel, liveLabel};
+}
+function renderActiveFilterSummary(){
+  if(!liveEls.activeFilterSummary) return;
+  if(!currentTournament){
+    liveEls.activeFilterSummary.innerHTML='';
+    return;
+  }
+  const {dayLabel, subLabel, divisionLabel, liveLabel} = buildActiveFilterLabel();
+  liveEls.activeFilterSummary.innerHTML = `<strong>Showing:</strong> <span class="filterPill">${escapeHtml(dayLabel)}</span><span class="filterPill">${escapeHtml(subLabel)}</span><span class="filterPill">${escapeHtml(divisionLabel)}</span><span class="filterPill">${escapeHtml(liveLabel)}</span>`;
+}
+function renderSchedule(){ const games=getFilteredGames(); if(!games.length){ liveEls.scheduleGrid.innerHTML='<div class="callout">No games match this filter right now. Try switching the day, division, or live-only toggle.</div>'; return; } liveEls.scheduleGrid.innerHTML=games.map(game=>{ const statusClass=game.status==='Live'?'live':(game.status==='Final'?'final':'next'); const prob=getWinProbabilities(game,currentTournament.division); return `<article class="gameCard"><div class="gameTop"><div class="gameTeams" title="${escapeHtml(formatPossibleTeamDisplay(game.teamAPossibleNames,1,game.teamA) + ' vs ' + formatPossibleTeamDisplay(game.teamBPossibleNames,2,game.teamB))}">${game.matchupDisplay||game.matchup}</div><div class="statusPill ${statusClass}">${game.status}</div></div><div class="scoreLine">${formatScore(game.scoreA,game.scoreB)}</div>${buildProbabilityBlock(game,prob)}<div class="meta">${game.period?game.period+'<br>':''}${game.time} • ${game.pool}<br>${(formatSubDivisionLabel(getGameSubDivisionKeys(game)[0])||game.round||displayDayLabel(game.day)||'')}</div><div class="cardActions"><button type="button" data-detail="${game.id}">Game Detail</button><button type="button" data-viewteams="${game.id}">View Teams</button>${adminUnlocked?`<button type="button" data-editgame="${game.id}">Quick Edit</button>`:''}</div></article>`; }).join(''); liveEls.scheduleGrid.querySelectorAll('[data-detail]').forEach(btn=>btn.addEventListener('click',()=>openGameDetail(btn.dataset.detail))); liveEls.scheduleGrid.querySelectorAll('[data-viewteams]').forEach(btn=>btn.addEventListener('click',()=>openTeamList())); liveEls.scheduleGrid.querySelectorAll('[data-editgame]').forEach(btn=>btn.addEventListener('click',()=>{ setActivePanel('adminPanel'); loadGameIntoEditor(btn.dataset.editgame); })); }
+function renderBracket(){ if(!currentTournament){ liveEls.bracketGrid.innerHTML=''; return; } const visibleGames=getVisibleGamesBase().filter(g=>(selectedDay==='All'||canonicalDayKey(g.day)===selectedDay)); currentTournament.bracket=deriveBracket(visibleGames); liveEls.bracketGrid.innerHTML=currentTournament.bracket.map(round=>`<div class="round"><div class="roundTitle">${round.round}</div>${round.matches.map(match=>`<div class="match"><div class="matchRow"><span title="${escapeHtml(match.a)}">${shortenPossibleDisplay(match.a)}</span><span>${match.sa||'—'}</span></div><div class="matchRow"><span title="${escapeHtml(match.b)}">${shortenPossibleDisplay(match.b)}</span><span>${match.sb||'—'}</span></div><div class="matchMeta">${match.meta}</div></div>`).join('')}</div>`).join('') || '<div class="callout">No bracket games match this day and division yet.</div>'; }
+function renderTeams(){ if(!currentTournament){ liveEls.teamsGrid.innerHTML=''; return; } const visibleNames=new Set(getVisibleGamesBase().flatMap(g=>[...resolvePossibleTeamNames(g.teamA,currentTournament,new Set()), ...resolvePossibleTeamNames(g.teamB,currentTournament,new Set())].map(cleanImportedTeamName))); const teams=currentSubDivision==='All' ? currentTournament.teams : currentTournament.teams.filter(team=>visibleNames.has(cleanImportedTeamName(team.name))); liveEls.teamsGrid.innerHTML=teams.map(team=>`<article class="teamCard"><div class="teamTop"><div class="teamName" title="${escapeHtml(team.name)}">${getDisplayTeamName(team.name,1)}</div><div class="teamSeed">${team.seed||''}</div></div><div class="roster">${(team.roster||[]).map(player=>`<div class="player"><span>#${player[0]} ${player[1]}</span><span>Cap ${player[0]}</span></div>`).join('')}</div></article>`).join('') || '<div class="callout">No teams match this division tab yet.</div>'; }
+
+function renderAdminGameOptions(){
+  if(!liveEls.adminGameSelect) return;
+  const games=(currentTournament?.games)||[];
+  liveEls.adminGameSelect.innerHTML = games.length ? games.map(g=>`<option value="${g.id}">${g.matchupDisplay||g.matchup} • ${g.time||'TBD'} • ${g.status}</option>`).join('') : '<option value="">No games available</option>';
+  if(editingGameId && games.some(g=>g.id===editingGameId)) liveEls.adminGameSelect.value = editingGameId;
+  else if(games[0]) { editingGameId = games[0].id; liveEls.adminGameSelect.value = games[0].id; }
+  else editingGameId = '';
+}
+function fillEditorFromGame(game){
+  if(!game) return;
+  editingGameId = game.id;
+  if(liveEls.adminGameSelect) liveEls.adminGameSelect.value = game.id;
+  liveEls.editTeamA.value = game.teamA||'';
+  liveEls.editTeamB.value = game.teamB||'';
+  liveEls.editScoreA.value = Number.isFinite(game.scoreA) ? game.scoreA : '';
+  liveEls.editScoreB.value = Number.isFinite(game.scoreB) ? game.scoreB : '';
+  liveEls.editStatus.value = game.status||'Next';
+  liveEls.editPeriod.value = game.period||'';
+  liveEls.editRound.value = game.round||'';
+  liveEls.editDay.value = game.day||'';
+  liveEls.editTime.value = game.time||'';
+  liveEls.editPool.value = game.pool||'';
+  liveEls.editNotes.value = game.notes||'';
+  if(liveEls.gameEditStatus) liveEls.gameEditStatus.textContent = `Editing ${game.matchupDisplay||game.matchup}.`;
+}
+function loadGameIntoEditor(id){
+  if(!adminUnlocked){ setActivePanel('adminPanel'); if(liveEls.gameEditStatus) liveEls.gameEditStatus.textContent='Unlock admin first.'; return; }
+  const game=currentTournament?.games?.find(g=>g.id===id) || currentTournament?.games?.[0];
+  if(!game){ if(liveEls.gameEditStatus) liveEls.gameEditStatus.textContent='No game available to edit.'; return; }
+  fillEditorFromGame(game);
+}
+function saveEditedGame(){
+  if(!adminUnlocked){ if(liveEls.gameEditStatus) liveEls.gameEditStatus.textContent='Unlock admin first.'; return; }
+  const game=currentTournament?.games?.find(g=>g.id===editingGameId || g.id===liveEls.adminGameSelect?.value);
+  if(!game){ if(liveEls.gameEditStatus) liveEls.gameEditStatus.textContent='Pick a game first.'; return; }
+  game.teamA = liveEls.editTeamA.value.trim() || game.teamA;
+  game.teamB = liveEls.editTeamB.value.trim() || game.teamB;
+  game.scoreA = liveEls.editScoreA.value === '' ? null : Number(liveEls.editScoreA.value);
+  game.scoreB = liveEls.editScoreB.value === '' ? null : Number(liveEls.editScoreB.value);
+  game.status = liveEls.editStatus.value || game.status;
+  game.period = liveEls.editPeriod.value.trim();
+  game.round = liveEls.editRound.value.trim();
+  game.day = liveEls.editDay.value.trim();
+  game.time = liveEls.editTime.value.trim();
+  game.pool = liveEls.editPool.value.trim();
+  game.notes = liveEls.editNotes.value.trim();
+  enrichGameDisplay(game);
+  recalcTournament(currentTournament);
+  const idx=liveTournaments.findIndex(t=>t.id===currentTournament.id);
+  if(idx>=0) liveTournaments[idx]=currentTournament;
+  persistImportedTournaments();
+  renderTournamentOptions();
+  renderCurrentTournament();
+  loadGameIntoEditor(game.id);
+  if(liveEls.gameEditStatus) liveEls.gameEditStatus.textContent = `Saved ${game.matchupDisplay||game.matchup}.`;
+}
 function renderFeatured(){ const featured=liveTournaments.find(t=>t.featured); liveEls.featuredBadgeWrap.innerHTML=featured?`<div class="featuredBadge">★ ${featured.name} • ${featured.division}</div>`:'<div class="small">No featured tournament selected.</div>'; }
-function renderCurrentTournament(){ ensureCurrentTournament(); if(!currentTournament){ liveEls.pageTitle.textContent='No tournaments in this division yet'; liveEls.pageSubtitle.textContent='Import a sheet in the Admin tab to add one.'; liveEls.eyebrowTitle.textContent='Empty state'; liveEls.heroStats.innerHTML=''; liveEls.scheduleGrid.innerHTML='<div class="callout">This division does not have any tournaments yet.</div>'; liveEls.bracketGrid.innerHTML=''; liveEls.teamsGrid.innerHTML=''; renderFeatured(); return; } recalcTournament(currentTournament); liveEls.pageTitle.textContent=currentTournament.name; liveEls.pageSubtitle.textContent=`${currentTournament.dates} • ${currentTournament.location}`; liveEls.eyebrowTitle.textContent=currentTournament.featured?'Featured event':'Tournament'; liveEls.divisionBadge.textContent=`Division: ${currentTournament.division}`; liveEls.featureBtn.textContent=currentTournament.featured?'Featured Tournament':'Set as Featured'; liveEls.heroStats.innerHTML=[{num:currentTournament.teamsCount,label:'Teams'},{num:currentTournament.gamesCount,label:'Games'},{num:currentTournament.liveCount,label:'Live now'},{num:getVisibleTournaments().length,label:currentDivision==='All'?'Events total':`${currentDivision} events`}].map(s=>`<div class="stat"><div class="statNum">${s.num}</div><div class="statLabel">${s.label}</div></div>`).join(''); renderDayFilters(); renderSchedule(); renderBracket(); renderTeams(); renderFeatured(); updateTimestamp(); }
+function renderDeleteTournamentOptions(){ if(!liveEls.deleteTournamentSelect) return; const imported=liveTournaments.filter(t=>!defaultLiveTournaments.some(d=>d.id===t.id)); liveEls.deleteTournamentSelect.innerHTML=imported.length ? imported.map(t=>`<option value="${t.id}">${t.name} • ${t.division}</option>`).join('') : '<option value="">No imported tournaments</option>'; }
+function renderCurrentTournament(){ ensureCurrentTournament(); if(!currentTournament){ liveEls.pageTitle.textContent='No tournaments in this division yet'; liveEls.pageSubtitle.textContent='Import a sheet in the Admin tab to add one.'; liveEls.eyebrowTitle.textContent='Empty state'; liveEls.heroStats.innerHTML=''; liveEls.scheduleGrid.innerHTML='<div class="callout">This division does not have any tournaments yet.</div>'; liveEls.bracketGrid.innerHTML=''; liveEls.teamsGrid.innerHTML=''; renderFeatured(); renderDeleteTournamentOptions(); return; } recalcTournament(currentTournament); liveEls.pageTitle.textContent=currentTournament.name; liveEls.pageSubtitle.textContent=`${currentTournament.dates} • ${currentTournament.location}`; liveEls.eyebrowTitle.textContent=currentTournament.featured?'Featured event':'Tournament'; liveEls.divisionBadge.textContent=`Division: ${currentTournament.division}`; liveEls.featureBtn.textContent=currentTournament.featured?'Featured Event':'Set as Featured'; liveEls.heroStats.innerHTML=[{num:currentTournament.teamsCount,label:'Teams'},{num:currentTournament.gamesCount,label:'Games'},{num:currentTournament.liveCount,label:'Live now'},{num:getVisibleTournaments().length,label:currentDivision==='All'?'Events total':`${currentDivision} events`}].map(s=>`<div class="stat"><div class="statNum">${s.num}</div><div class="statLabel">${s.label}</div></div>`).join(''); renderSubDivisionFilters(); renderDayFilters(); renderActiveFilterSummary(); renderSchedule(); renderBracket(); renderTeams(); renderFeatured(); renderDeleteTournamentOptions(); renderAdminGameOptions(); if(adminUnlocked && currentTournament?.games?.length && (!editingGameId || !currentTournament.games.some(g=>g.id===editingGameId))) loadGameIntoEditor(currentTournament.games[0].id); updateTimestamp(); }
 function advanceGame(game){ const periods=['1st Quarter','2nd Quarter','Halftime','3rd Quarter','4th Quarter','Final']; if(game.status==='Live'){ if(Math.random()>0.45) game.scoreA=(game.scoreA??0)+1; if(Math.random()>0.48) game.scoreB=(game.scoreB??0)+1; const idx=Math.max(0,periods.indexOf(game.period||'1st Quarter')); if(idx>=periods.length-2||Math.random()>0.72){ game.period='Final'; game.status='Final'; } else game.period=periods[idx+1]; } }
 function refreshTournamentData(){ if(!currentTournament) return; let liveGames=currentTournament.games.filter(g=>g.status==='Live'); if(!liveGames.length){ const nextGame=currentTournament.games.find(g=>g.status==='Next'); if(nextGame){ nextGame.status='Live'; nextGame.period='1st Quarter'; nextGame.scoreA=nextGame.scoreA??0; nextGame.scoreB=nextGame.scoreB??0; liveGames=[nextGame]; } } liveGames.forEach(advanceGame); recalcTournament(currentTournament); const idx=liveTournaments.findIndex(t=>t.id===currentTournament.id); if(idx>=0) liveTournaments[idx]=currentTournament; lastRefreshStamp=new Date(); persistImportedTournaments(); renderCurrentTournament(); }
 function setFeaturedTournament(){ if(!currentTournament) return; liveTournaments.forEach(t=>t.featured=t.id===currentTournament.id); persistImportedTournaments(); renderCurrentTournament(); }
@@ -907,9 +1459,6 @@ function parseDelimitedText(text){
   if(!rows.length) return [];
   const headers=rows[0].map(cell=>normalizeHeader(cell));
   return rows.slice(1).map(row=>Object.fromEntries(headers.map((header,i)=>[header,(row[i]||'').trim()]))).filter(obj=>Object.values(obj).some(Boolean));
-}
-function cleanImportedTeamName(name){
-  return String(name||'').replace(/\s+/g,' ').replace(/\s*-\s*$/,'').trim();
 }
 function looksLikeTimeCell(value){
   return /^\d{1,2}:\d{2}\s*(AM|PM)$/i.test(String(value||'').trim());
@@ -937,6 +1486,7 @@ function parseMetaBlock(row,start){
 function parseVisualTournamentFromMatrix(matrix, forcedDivision, sourceName){
   const contexts={0:{dayLabel:'Day 1',host:'',location:''},9:{dayLabel:'Day 2',host:'',location:''}};
   const games=[]; const teamMap=new Map(); const dates=new Set(); const locations=new Set(); const divisionsSeen=new Set();
+  const aliasMap=buildAliasMapFromMatrix(matrix);
   const addTeam=(name)=>{
     const clean=cleanImportedTeamName(name);
     if(!clean || /^win gm|^los gm|^\d+(st|nd|rd|th)\s+in\s+/i.test(clean)) return;
@@ -945,9 +1495,11 @@ function parseVisualTournamentFromMatrix(matrix, forcedDivision, sourceName){
   const addGame=(ctx,row,start,rowIndex)=>{
     const code=String(row[start]||'').trim();
     const time=String(row[start+1]||'').trim();
-    const teamA=cleanImportedTeamName(row[start+2]||'');
+    const rawTeamA=String(row[start+2]||'').trim();
+    const teamA=cleanImportedTeamName(rawTeamA);
     const rawScoreA=String(row[start+3]||'').trim();
-    const teamB=cleanImportedTeamName(row[start+4]||'');
+    const rawTeamB=String(row[start+4]||'').trim();
+    const teamB=cleanImportedTeamName(rawTeamB);
     const rawScoreB=String(row[start+5]||'').trim();
     const divisionCell=String(row[start+6]||'').trim();
     const notes=String(row[start+7]||'').trim();
@@ -961,9 +1513,9 @@ function parseVisualTournamentFromMatrix(matrix, forcedDivision, sourceName){
     games.push({
       id:`imp-${rowIndex}-${start}-${uidLive()}`,
       day:ctx.dayLabel || 'Day 1',
-      matchup:`${teamA} vs ${teamB}`,
-      teamA,
-      teamB,
+      matchup:`${teamA||rawTeamA} vs ${teamB||rawTeamB}`,
+      teamA:teamA||rawTeamA,
+      teamB:teamB||rawTeamB,
       scoreA:hasScores ? scoreA : null,
       scoreB:hasScores ? scoreB : null,
       time,
@@ -1010,7 +1562,8 @@ function parseVisualTournamentFromMatrix(matrix, forcedDivision, sourceName){
     location:locations.size>1 ? 'Multiple sites' : ([...locations][0] || 'TBD'),
     featured:false,
     games,
-    teams:[...teamMap.values()]
+    teams:[...teamMap.values()],
+    aliasMap
   };
   return recalcTournament(tournament);
 }
@@ -1019,10 +1572,10 @@ function buildTournamentFromRows(rows,forcedDivision,sourceName){
   const first=rows[0];
   const division=forcedDivision||first.division||'NCAA';
   const name=(sourceName ? String(sourceName).replace(/\.(csv|tsv|txt)$/i,'') : '') || first.tournament||first.name||'Imported Tournament';
-  const tournament={id:`${slugify(name)}-${Date.now().toString().slice(-5)}`,division,name,dates:first.dates||first.date||'TBD',location:first.location||first.site||'TBD',featured:false,games:[],teams:[]};
+  const tournament={id:`${slugify(name)}-${Date.now().toString().slice(-5)}`,division,name,dates:first.dates||first.date||'TBD',location:first.location||first.site||'TBD',featured:false,games:[],teams:[],aliasMap:{}};
   rows.forEach((row,index)=>{
-    const teamA=row.teama||row.team1||row.home||'';
-    const teamB=row.teamb||row.team2||row.away||'';
+    const teamA=cleanImportedTeamName(row.teama||row.team1||row.home||'');
+    const teamB=cleanImportedTeamName(row.teamb||row.team2||row.away||'');
     if(!teamA&&!teamB) return;
     const scoreA=row.scorea===''||row.scorea==null?null:Number(row.scorea);
     const scoreB=row.scoreb===''||row.scoreb==null?null:Number(row.scoreb);
@@ -1053,7 +1606,7 @@ function importSheetData(rawText, sourceName='Imported Tournament'){
     renderDivisionFilters();
     renderTournamentOptions();
     renderCurrentTournament();
-    liveEls.importStatus.textContent=`Imported ${tournament.name} into ${tournament.division} with ${tournament.gamesCount} games and ${tournament.teamsCount} teams.`;
+    liveEls.importStatus.textContent=`Imported ${tournament.name} into ${tournament.division} with ${tournament.gamesCount} games and ${tournament.teamsCount} teams.`; if(liveEls.adminManageStatus) liveEls.adminManageStatus.textContent=`Imported ${tournament.name}.`;
     liveEls.sheetPasteInput.value='';
     setActivePanel('schedulePanel');
   } catch(error){
@@ -1092,8 +1645,11 @@ async function importSheetFromUrl(rawUrl){
   }
 }
 function getSampleSheetText(){ return ['division\ttournament\tdates\tlocation\tday\ttime\tpool\tstatus\tround\tteamA\tteamB\tscoreA\tscoreB\tseedA\tseedB\trosterA\trosterB','16U\tFinley Summer Cup\tAugust 2-3\tBrooklyn, NY\tSaturday\t9:00 AM\tPool A\tFinal\tSemifinal\tLIU Blue\tHydras\t10\t8\t#1\t#4\t1 Maya|2 Ella|3 Zoe|4 Quinn\t1 Cam|2 Leo|3 Finn|4 Knox','16U\tFinley Summer Cup\tAugust 2-3\tBrooklyn, NY\tSaturday\t10:15 AM\tPool A\tFinal\tSemifinal\tTritons\tWave Riders\t7\t6\t#2\t#3\t1 Jude|2 Nico|3 Cruz|4 Jax\t1 Skye|2 June|3 Remy|4 Luca','16U\tFinley Summer Cup\tAugust 2-3\tBrooklyn, NY\tSunday\t12:00 PM\tChampionship Pool\tNext\tFinal\tLIU Blue\tTritons\t\t\t#1\t#2\t1 Maya|2 Ella|3 Zoe|4 Quinn\t1 Jude|2 Nico|3 Cruz|4 Jax'].join('\n'); }
-function clearImportedTournaments(){ localStorage.removeItem(LIVE_STORAGE_KEY); localStorage.removeItem(LIVE_FEATURED_KEY); loadLiveTournaments(); currentDivision='All'; currentTournament=liveTournaments.find(t=>t.featured)||liveTournaments[0]||null; renderDivisionFilters(); renderTournamentOptions(); renderCurrentTournament(); liveEls.importStatus.textContent='Imported tournaments cleared. Default demo data restored.'; }
-function initLivePage(){ loadLiveTournaments(); liveEls.boardHeader=document.querySelector('body > header'); liveEls.boardMain=document.querySelector('body > main'); liveEls.livePage=document.getElementById('livePage'); liveEls.openBtn=document.getElementById('openLiveBtn'); liveEls.backBtn=document.getElementById('backToBoardBtn'); liveEls.inlineLaunchBtn=document.getElementById('launchLiveInlineBtn'); liveEls.tournamentSelect=document.getElementById('tournamentSelect'); liveEls.divisionFilters=document.getElementById('divisionFilters'); liveEls.adminDivisionSelect=document.getElementById('adminDivisionSelect'); liveEls.pageTitle=document.getElementById('pageTitle'); liveEls.pageSubtitle=document.getElementById('pageSubtitle'); liveEls.eyebrowTitle=document.getElementById('eyebrowTitle'); liveEls.heroStats=document.getElementById('heroStats'); liveEls.dayFilters=document.getElementById('dayFilters'); liveEls.scheduleGrid=document.getElementById('scheduleGrid'); liveEls.bracketGrid=document.getElementById('bracketGrid'); liveEls.teamsGrid=document.getElementById('teamsGrid'); liveEls.featuredBadgeWrap=document.getElementById('featuredBadgeWrap'); liveEls.divisionBadge=document.getElementById('divisionBadge'); liveEls.liveTimestamp=document.getElementById('liveTimestamp'); liveEls.allGamesBtn=document.getElementById('allGamesBtn'); liveEls.liveOnlyBtn=document.getElementById('liveOnlyBtn'); liveEls.refreshBtn=document.getElementById('refreshBtn'); liveEls.featureBtn=document.getElementById('featureBtn'); liveEls.sheetUrlInput=document.getElementById('sheetUrlInput'); liveEls.importUrlBtn=document.getElementById('importUrlBtn'); liveEls.sheetFileInput=document.getElementById('sheetFileInput'); liveEls.sheetPasteInput=document.getElementById('sheetPasteInput'); liveEls.importSheetBtn=document.getElementById('importSheetBtn'); liveEls.sampleSheetBtn=document.getElementById('sampleSheetBtn'); liveEls.clearImportedBtn=document.getElementById('clearImportedBtn'); liveEls.importStatus=document.getElementById('importStatus'); liveEls.liveModal=document.getElementById('liveModal'); liveEls.modalTitle=document.getElementById('modalTitle'); liveEls.modalEyebrow=document.getElementById('modalEyebrow'); liveEls.modalBody=document.getElementById('modalBody'); liveEls.closeModalBtn=document.getElementById('closeModalBtn'); currentTournament=liveTournaments.find(t=>t.featured)||liveTournaments[0]||null; renderDivisionFilters(); renderTournamentOptions(); liveEls.tournamentSelect.addEventListener('change',e=>{ currentTournament=liveTournaments.find(t=>t.id===e.target.value)||null; selectedDay='All'; liveOnly=false; liveEls.allGamesBtn.classList.add('active'); liveEls.liveOnlyBtn.classList.remove('active'); renderCurrentTournament(); }); document.querySelectorAll('#livePage .tabBtn[data-panel]').forEach(btn=>btn.addEventListener('click',()=>setActivePanel(btn.dataset.panel))); liveEls.allGamesBtn.addEventListener('click',()=>{ liveOnly=false; liveEls.allGamesBtn.classList.add('active'); liveEls.liveOnlyBtn.classList.remove('active'); renderSchedule(); }); liveEls.liveOnlyBtn.addEventListener('click',()=>{ liveOnly=true; liveEls.liveOnlyBtn.classList.add('active'); liveEls.allGamesBtn.classList.remove('active'); renderSchedule(); }); liveEls.refreshBtn.addEventListener('click',refreshTournamentData); liveEls.featureBtn.addEventListener('click',setFeaturedTournament); liveEls.openBtn.addEventListener('click',openLivePage); if(liveEls.inlineLaunchBtn) liveEls.inlineLaunchBtn.addEventListener('click',openLivePage); liveEls.backBtn.addEventListener('click',closeLivePage); liveEls.closeModalBtn.addEventListener('click',closeModal); liveEls.liveModal.addEventListener('click',e=>{ if(e.target===liveEls.liveModal) closeModal(); }); document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); }); liveEls.importSheetBtn.addEventListener('click',()=>{ const pasted=liveEls.sheetPasteInput.value.trim(); if(pasted) return importSheetData(pasted); const file=liveEls.sheetFileInput.files&&liveEls.sheetFileInput.files[0]; if(!file){ liveEls.importStatus.textContent='Paste sheet rows, use Import From Link, or choose a CSV or TSV file first.'; return; } const reader=new FileReader(); reader.onload=e=>importSheetData(String(e.target.result||''), file.name || 'Imported Tournament'); reader.readAsText(file); }); liveEls.importUrlBtn.addEventListener('click',()=>importSheetFromUrl(liveEls.sheetUrlInput.value)); liveEls.sampleSheetBtn.addEventListener('click',()=>{ liveEls.sheetPasteInput.value=getSampleSheetText(); liveEls.importStatus.textContent='Sample sheet loaded. Click Import Sheet Data to create the tournament.'; }); liveEls.clearImportedBtn.addEventListener('click',clearImportedTournaments); if(window.location.hash==='#live') openLivePage(false); renderCurrentTournament(); }
+function clearImportedTournaments(){ localStorage.removeItem(LIVE_STORAGE_KEY); localStorage.removeItem(LIVE_FEATURED_KEY); loadLiveTournaments(); currentDivision='All'; currentTournament=liveTournaments.find(t=>t.featured)||liveTournaments[0]||null; editingGameId=''; renderDivisionFilters(); renderTournamentOptions(); renderCurrentTournament(); liveEls.importStatus.textContent='Imported tournaments cleared. Default demo data restored.'; }
+function syncAdminVisibility(){ if(!liveEls.adminLocked||!liveEls.adminUnlocked) return; liveEls.adminLocked.style.display=adminUnlocked?'none':'flex'; liveEls.adminUnlocked.style.display=adminUnlocked?'flex':'none'; if(liveEls.adminLockStatus) liveEls.adminLockStatus.textContent=adminUnlocked?'Admin unlocked.':'Admin is locked.'; }
+function unlockAdmin(){ const value=(liveEls.adminPasswordInput?.value||'').trim(); if(value===LIVE_ADMIN_PASSWORD){ adminUnlocked=true; localStorage.setItem(LIVE_ADMIN_UNLOCK_KEY,'true'); if(liveEls.adminManageStatus) liveEls.adminManageStatus.textContent='Admin unlocked.'; syncAdminVisibility(); renderDeleteTournamentOptions(); } else { if(liveEls.adminLockStatus) liveEls.adminLockStatus.textContent='Incorrect password.'; } }
+function deleteSelectedTournament(){ if(!adminUnlocked){ if(liveEls.adminManageStatus) liveEls.adminManageStatus.textContent='Unlock admin first.'; return; } const id=liveEls.deleteTournamentSelect?.value; if(!id){ if(liveEls.adminManageStatus) liveEls.adminManageStatus.textContent='No imported tournament selected.'; return; } if(defaultLiveTournaments.some(t=>t.id===id)){ if(liveEls.adminManageStatus) liveEls.adminManageStatus.textContent='Built-in demo tournaments cannot be deleted here.'; return; } const victim=liveTournaments.find(t=>t.id===id); liveTournaments=liveTournaments.filter(t=>t.id!==id); if(currentTournament&&currentTournament.id===id) currentTournament=liveTournaments.find(t=>t.featured)||liveTournaments[0]||null; editingGameId=''; persistImportedTournaments(); renderTournamentOptions(); renderCurrentTournament(); if(liveEls.adminManageStatus) liveEls.adminManageStatus.textContent=`Deleted ${victim?.name||'selected tournament'}.`; }
+function initLivePage(){ loadLiveTournaments(); adminUnlocked=localStorage.getItem(LIVE_ADMIN_UNLOCK_KEY)==='true'; liveEls.boardHeader=document.querySelector('body > header'); liveEls.boardMain=document.querySelector('body > main'); liveEls.livePage=document.getElementById('livePage'); liveEls.openBtn=document.getElementById('openLiveBtn'); liveEls.backBtn=document.getElementById('backToBoardBtn'); liveEls.inlineLaunchBtn=document.getElementById('launchLiveInlineBtn'); liveEls.tournamentSelect=document.getElementById('tournamentSelect'); liveEls.divisionFilters=document.getElementById('divisionFilters'); liveEls.adminDivisionSelect=document.getElementById('adminDivisionSelect'); liveEls.pageTitle=document.getElementById('pageTitle'); liveEls.pageSubtitle=document.getElementById('pageSubtitle'); liveEls.eyebrowTitle=document.getElementById('eyebrowTitle'); liveEls.heroStats=document.getElementById('heroStats'); liveEls.dayFilters=document.getElementById('dayFilters'); liveEls.subDivisionFilters=document.getElementById('subDivisionFilters'); liveEls.activeFilterSummary=document.getElementById('activeFilterSummary'); liveEls.scheduleGrid=document.getElementById('scheduleGrid'); liveEls.bracketGrid=document.getElementById('bracketGrid'); liveEls.teamsGrid=document.getElementById('teamsGrid'); liveEls.featuredBadgeWrap=document.getElementById('featuredBadgeWrap'); liveEls.divisionBadge=document.getElementById('divisionBadge'); liveEls.liveTimestamp=document.getElementById('liveTimestamp'); liveEls.allGamesBtn=document.getElementById('allGamesBtn'); liveEls.liveOnlyBtn=document.getElementById('liveOnlyBtn'); liveEls.refreshBtn=document.getElementById('refreshBtn'); liveEls.featureBtn=document.getElementById('featureBtn'); liveEls.sheetUrlInput=document.getElementById('sheetUrlInput'); liveEls.importUrlBtn=document.getElementById('importUrlBtn'); liveEls.sheetFileInput=document.getElementById('sheetFileInput'); liveEls.sheetPasteInput=document.getElementById('sheetPasteInput'); liveEls.importSheetBtn=document.getElementById('importSheetBtn'); liveEls.sampleSheetBtn=document.getElementById('sampleSheetBtn'); liveEls.clearImportedBtn=document.getElementById('clearImportedBtn'); liveEls.importStatus=document.getElementById('importStatus'); liveEls.adminLocked=document.getElementById('adminLocked'); liveEls.adminUnlocked=document.getElementById('adminUnlocked'); liveEls.adminPasswordInput=document.getElementById('adminPasswordInput'); liveEls.unlockAdminBtn=document.getElementById('unlockAdminBtn'); liveEls.adminLockStatus=document.getElementById('adminLockStatus'); liveEls.deleteTournamentSelect=document.getElementById('deleteTournamentSelect'); liveEls.deleteTournamentBtn=document.getElementById('deleteTournamentBtn'); liveEls.adminManageStatus=document.getElementById('adminManageStatus'); liveEls.adminGameSelect=document.getElementById('adminGameSelect'); liveEls.loadGameEditorBtn=document.getElementById('loadGameEditorBtn'); liveEls.saveGameEditorBtn=document.getElementById('saveGameEditorBtn'); liveEls.editTeamA=document.getElementById('editTeamA'); liveEls.editTeamB=document.getElementById('editTeamB'); liveEls.editScoreA=document.getElementById('editScoreA'); liveEls.editScoreB=document.getElementById('editScoreB'); liveEls.editStatus=document.getElementById('editStatus'); liveEls.editPeriod=document.getElementById('editPeriod'); liveEls.editRound=document.getElementById('editRound'); liveEls.editDay=document.getElementById('editDay'); liveEls.editTime=document.getElementById('editTime'); liveEls.editPool=document.getElementById('editPool'); liveEls.editNotes=document.getElementById('editNotes'); liveEls.gameEditStatus=document.getElementById('gameEditStatus'); liveEls.liveModal=document.getElementById('liveModal'); liveEls.modalTitle=document.getElementById('modalTitle'); liveEls.modalEyebrow=document.getElementById('modalEyebrow'); liveEls.modalBody=document.getElementById('modalBody'); liveEls.closeModalBtn=document.getElementById('closeModalBtn'); currentTournament=liveTournaments.find(t=>t.featured)||liveTournaments[0]||null; renderDivisionFilters(); renderTournamentOptions(); syncAdminVisibility(); liveEls.tournamentSelect.addEventListener('change',e=>{ currentTournament=liveTournaments.find(t=>t.id===e.target.value)||null; selectedDay='All'; currentSubDivision='All'; liveOnly=false; liveEls.allGamesBtn.classList.add('active'); liveEls.liveOnlyBtn.classList.remove('active'); renderCurrentTournament(); }); document.querySelectorAll('#livePage .tabBtn[data-panel]').forEach(btn=>btn.addEventListener('click',()=>setActivePanel(btn.dataset.panel))); liveEls.allGamesBtn.addEventListener('click',()=>{ liveOnly=false; liveEls.allGamesBtn.classList.add('active'); liveEls.liveOnlyBtn.classList.remove('active'); renderActiveFilterSummary(); renderSchedule(); }); liveEls.liveOnlyBtn.addEventListener('click',()=>{ liveOnly=true; liveEls.liveOnlyBtn.classList.add('active'); liveEls.allGamesBtn.classList.remove('active'); renderActiveFilterSummary(); renderSchedule(); }); liveEls.refreshBtn.addEventListener('click',refreshTournamentData); liveEls.featureBtn.addEventListener('click',setFeaturedTournament); liveEls.openBtn.addEventListener('click',openLivePage); if(liveEls.inlineLaunchBtn) liveEls.inlineLaunchBtn.addEventListener('click',openLivePage); liveEls.backBtn.addEventListener('click',closeLivePage); liveEls.closeModalBtn.addEventListener('click',closeModal); liveEls.liveModal.addEventListener('click',e=>{ if(e.target===liveEls.liveModal) closeModal(); }); document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); if(e.key==='Enter' && document.activeElement===liveEls.adminPasswordInput) unlockAdmin(); }); liveEls.unlockAdminBtn.addEventListener('click',unlockAdmin); liveEls.importSheetBtn.addEventListener('click',()=>{ const pasted=liveEls.sheetPasteInput.value.trim(); if(pasted) return importSheetData(pasted); const file=liveEls.sheetFileInput.files&&liveEls.sheetFileInput.files[0]; if(!file){ liveEls.importStatus.textContent='Paste sheet rows, use Import From Link, or choose a CSV or TSV file first.'; return; } const reader=new FileReader(); reader.onload=e=>importSheetData(String(e.target.result||''), file.name || 'Imported Tournament'); reader.readAsText(file); }); liveEls.importUrlBtn.addEventListener('click',()=>importSheetFromUrl(liveEls.sheetUrlInput.value)); liveEls.sampleSheetBtn.addEventListener('click',()=>{ liveEls.sheetPasteInput.value=getSampleSheetText(); liveEls.importStatus.textContent='Sample sheet loaded. Click Import Sheet Data to create the tournament.'; }); liveEls.clearImportedBtn.addEventListener('click',clearImportedTournaments); liveEls.deleteTournamentBtn.addEventListener('click',deleteSelectedTournament); if(liveEls.adminGameSelect) liveEls.adminGameSelect.addEventListener('change',()=>loadGameIntoEditor(liveEls.adminGameSelect.value)); if(liveEls.loadGameEditorBtn) liveEls.loadGameEditorBtn.addEventListener('click',()=>loadGameIntoEditor(liveEls.adminGameSelect.value)); if(liveEls.saveGameEditorBtn) liveEls.saveGameEditorBtn.addEventListener('click',saveEditedGame); if(window.location.hash==='#live') openLivePage(false); renderCurrentTournament(); }
 function openLivePage(pushHash=true){ liveEls.boardHeader.classList.add('appPageHidden'); liveEls.boardMain.classList.add('appPageHidden'); liveEls.livePage.classList.remove('appPageHidden'); if(pushHash) history.replaceState(null,'','#live'); window.scrollTo({top:0,behavior:'instant'}); }
 function closeLivePage(){ liveEls.livePage.classList.add('appPageHidden'); liveEls.boardHeader.classList.remove('appPageHidden'); liveEls.boardMain.classList.remove('appPageHidden'); history.replaceState(null,'',window.location.pathname+window.location.search); window.scrollTo({top:0,behavior:'instant'}); }
 window.addEventListener('hashchange',()=>{ if(window.location.hash==='#live') openLivePage(false); else if(!liveEls.livePage.classList.contains('appPageHidden')) closeLivePage(); });
